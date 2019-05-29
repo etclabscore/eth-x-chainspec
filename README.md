@@ -14,6 +14,8 @@ This is, at least, a massive limitation for testing and development. For example
 
 ... which limits the validity and relevance of these tests enormously.
 
+With a spec available for this configuration, a door opens to including x-chain configuration data in these tests, which would extend their relevance and applicability beyond their current ETH-only opinion. 
+
 
 #### What
 
