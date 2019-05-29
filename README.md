@@ -1,5 +1,5 @@
 :construction: Toward building a chain configuration standard that can be implemented by
-any Ethereum-ready client to describe and configure network and chain parameters.
+any Ethereum-ready client to describe and configure chain parameters.
 
 #### Why
 
