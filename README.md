@@ -5,7 +5,7 @@ any Ethereum-ready client to describe and configure network and chain parameters
 
 The two most popular clients in the Ethereum ecosystem, [Parity](https://github.com/paritytech/parity-ethereum) and [Geth](https://github.com/ethereum/go-ethereum) use different patterns for external chain and network definitions. This is annoying. 
 
-Without a standardized way to talk about chain configurations that can be understood by at leaset these two major clients, all cross-client and cross-network interfaces are limited to one-off solutions and/or canonical-only chain configurations.
+Without a standardized way to talk about chain configurations that can be understood by at least these two major clients, all cross-client and cross-network interfaces are limited to one-off solutions and/or canonical-only chain configurations.
 
 This is, at least, a massive limitation for testing and development. For example, the canonical [ethererum/tests](http://github.com/ethereum/tests) suite which is run by both Geth and Parity, rely entirely on hardcoded, flat, and opaque chain definitions:
 
