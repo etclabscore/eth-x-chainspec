@@ -11,6 +11,7 @@ import (
 
 	xchain ".."
 	"github.com/davecgh/go-spew/spew"
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
@@ -85,6 +86,29 @@ var testCases = []chainMarshalCase{
 					},
 				},
 			},
+			Params: &ConfigParams{
+				GasLimitBoundDivisor: xchain.Uint64(1024),
+				Registrar: func() *common.Address {
+					a := common.HexToAddress("0x0000000000000000000000000000000000000000")
+					return &a
+				}(),
+				AccountStartNonce:     xchain.Uint64(0),
+				MaximumExtraDataSize:  xchain.Uint64(32),
+				MinGasLimit:           xchain.Uint64(5000),
+				NetworkID:             xchain.Uint64(1),
+				ChainID:               xchain.Uint64(uint64(0x0334)), // shoulda done 'em all like this; removes 'magic' from conversion from raw json file
+				MaxCodeSize:           xchain.Uint64(24576),
+				MaxCodeSizeTransition: xchain.Uint64(10),
+				EIP150Transition:      xchain.Uint64(0),
+				EIP160Transition:      xchain.Uint64(10),
+				EIP161abcTransition:   xchain.Uint64(10),
+				EIP161dTransition:     xchain.Uint64(10),
+				EIP155Transition:      xchain.Uint64(10),
+				EIP140Transition:      xchain.Uint64(20),
+				EIP211Transition:      xchain.Uint64(20),
+				EIP214Transition:      xchain.Uint64(20),
+				EIP658Transition:      xchain.Uint64(20),
+			},
 		},
 	},
 	{
@@ -139,7 +163,13 @@ func testChainFile(f string) (err error) {
 				return fmt.Errorf("%s - got: %v, want: %v", c.chainFile, p.Name, c.want.Name)
 			}
 			if c.want.EngineOpt.ParityConfigEngineEthash != nil {
-				err := assertSameEthashParams(c.chainFile, c.want.EngineOpt.ParityConfigEngineEthash, p.EngineOpt.ParityConfigEngineEthash)
+				err := assertEthashParams(c.chainFile, c.want.EngineOpt.ParityConfigEngineEthash, p.EngineOpt.ParityConfigEngineEthash)
+				if err != nil {
+					return err
+				}
+			}
+			if c.want.Params != nil {
+				err := assertParams(c.chainFile, c.want.Params, p.Params)
 				if err != nil {
 					return err
 				}
@@ -149,7 +179,65 @@ func testChainFile(f string) (err error) {
 	return nil
 }
 
-func assertSameEthashParams(chainFile string, p1, p2 *ConfigEngineEthash) error {
+func assertParams(chainFile string, p1, p2 *ConfigParams) error {
+	if p1.GasLimitBoundDivisor != p2.GasLimitBoundDivisor {
+		return fmt.Errorf("%s - got: %v, want: %v", chainFile, p1.GasLimitBoundDivisor, p2.GasLimitBoundDivisor)
+	}
+	if !reflect.DeepEqual(p1.Registrar, p2.Registrar) {
+		return fmt.Errorf("%s - got: %v, want: %v", chainFile, p1.Registrar, p2.Registrar)
+	}
+	if p1.AccountStartNonce != p2.AccountStartNonce {
+		return fmt.Errorf("%s - got: %v, want: %v", chainFile, p1.AccountStartNonce, p2.AccountStartNonce)
+	}
+	if p1.MaximumExtraDataSize != p2.MaximumExtraDataSize {
+		return fmt.Errorf("%s - got: %v, want: %v", chainFile, p1.MaximumExtraDataSize, p2.MaximumExtraDataSize)
+	}
+	if p1.MinGasLimit != p2.MinGasLimit {
+		return fmt.Errorf("%s - got: %v, want: %v", chainFile, p1.MinGasLimit, p2.MinGasLimit)
+	}
+	if p1.NetworkID != p2.NetworkID {
+		return fmt.Errorf("%s - got: %v, want: %v", chainFile, p1.NetworkID, p2.NetworkID)
+	}
+	if p1.ChainID != p2.ChainID {
+		return fmt.Errorf("%s - got: %v, want: %v", chainFile, p1.ChainID, p2.ChainID)
+	}
+	if p1.MaxCodeSize != p2.MaxCodeSize {
+		return fmt.Errorf("%s - got: %v, want: %v", chainFile, p1.MaxCodeSize, p2.MaxCodeSize)
+	}
+	if p1.MaxCodeSizeTransition != p2.MaxCodeSizeTransition {
+		return fmt.Errorf("%s - got: %v, want: %v", chainFile, p1.MaxCodeSizeTransition, p2.MaxCodeSizeTransition)
+	}
+	if p1.EIP150Transition != p2.EIP150Transition {
+		return fmt.Errorf("%s - got: %v, want: %v", chainFile, p1.EIP150Transition, p2.EIP150Transition)
+	}
+	if p1.EIP160Transition != p2.EIP160Transition {
+		return fmt.Errorf("%s - got: %v, want: %v", chainFile, p1.EIP160Transition, p2.EIP160Transition)
+	}
+	if p1.EIP161abcTransition != p2.EIP161abcTransition {
+		return fmt.Errorf("%s - got: %v, want: %v", chainFile, p1.EIP161abcTransition, p2.EIP161abcTransition)
+	}
+	if p1.EIP161dTransition != p2.EIP161dTransition {
+		return fmt.Errorf("%s - got: %v, want: %v", chainFile, p1.EIP161dTransition, p2.EIP161dTransition)
+	}
+	if p1.EIP155Transition != p2.EIP155Transition {
+		return fmt.Errorf("%s - got: %v, want: %v", chainFile, p1.EIP155Transition, p2.EIP155Transition)
+	}
+	if p1.EIP140Transition != p2.EIP140Transition {
+		return fmt.Errorf("%s - got: %v, want: %v", chainFile, p1.EIP140Transition, p2.EIP140Transition)
+	}
+	if p1.EIP211Transition != p2.EIP211Transition {
+		return fmt.Errorf("%s - got: %v, want: %v", chainFile, p1.EIP211Transition, p2.EIP211Transition)
+	}
+	if p1.EIP214Transition != p2.EIP214Transition {
+		return fmt.Errorf("%s - got: %v, want: %v", chainFile, p1.EIP214Transition, p2.EIP214Transition)
+	}
+	if p1.EIP658Transition != p2.EIP658Transition {
+		return fmt.Errorf("%s - got: %v, want: %v", chainFile, p1.EIP658Transition, p2.EIP658Transition)
+	}
+	return nil
+}
+
+func assertEthashParams(chainFile string, p1, p2 *ConfigEngineEthash) error {
 	if p1.Params.MinimumDifficulty != p1.Params.MinimumDifficulty {
 		return fmt.Errorf("%s - got: %v, want: %v", chainFile, p1.Params.MinimumDifficulty, p1.Params.MinimumDifficulty)
 	}

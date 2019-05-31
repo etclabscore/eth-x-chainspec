@@ -86,4 +86,58 @@ type ConfigEngineAuthorityRoundParams struct {
 }
 
 type ConfigParams struct {
+	AccountStartNonce    xchain.Uint64 `json:"accountStartNonce,omitempty"`
+	MaximumExtraDataSize xchain.Uint64 `json:"maximumExtraDataSize,omitempty"`
+	MinGasLimit          xchain.Uint64 `json:"minGasLimit,omitempty"`
+
+	NetworkID xchain.Uint64 `json:"networkID,omitempty"`
+	ChainID   xchain.Uint64 `json:"chainID,omitempty"`
+
+	SubProtocolName string `json:"subprotocolName,omitempty"`
+
+	ForkBlock xchain.Uint64 `json:"forkBlock,omitempty"`
+	ForkHash  xchain.Uint64 `json:"forkHash,omitempty"`
+
+	EIP150Transition    xchain.Uint64 `json:"eip150Transition,omitempty"`
+	EIP160Transition    xchain.Uint64 `json:"eip160Transition,omitempty"`
+	EIP161abcTransition xchain.Uint64 `json:"eip161abcTransition,omitempty"`
+	EIP161dTransition   xchain.Uint64 `json:"eip161dTransition,omitempty"`
+
+	EIP98Transition xchain.Uint64 `json:"eip98Transition,omitempty"`
+
+	EIP155Transition                xchain.Uint64 `json:"eip155Transition,omitempty"`
+	ValidateChainIDTransition       xchain.Uint64 `json:"validateChainIdTransition,omitempty"`
+	ValidateChainReceiptsTransition xchain.Uint64 `json:"validateChainReceiptsTransition,omitempty"`
+
+	EIP140Transition         xchain.Uint64   `json:"eip140Transition,omitempty"`
+	EIP145Transition         xchain.Uint64   `json:"eip145Transition,omitempty"`
+	EIP210Transition         xchain.Uint64   `json:"eip210Transition,omitempty"`
+	EIP210ContractAddress    *common.Address `json:"eip210contractAddress,omitempty"`
+	EIP210ContractCode       xchain.Uint64   `json:"eip210contractCode,omitempty"`
+	EIP211Transition         xchain.Uint64   `json:"eip211Transition,omitempty"`
+	EIP214Transition         xchain.Uint64   `json:"eip214Transition,omitempty"`
+	EIP658Transition         xchain.Uint64   `json:"eip658Transition,omitempty"`
+	EIP1014Transition        xchain.Uint64   `json:"eip1014Transition,omitempty"`
+	EIP1052Transition        xchain.Uint64   `json:"eip1052Transition,omitempty"`
+	EIP1283Transition        xchain.Uint64   `json:"eip1283Transition,omitempty"`
+	EIP1283DisableTransition xchain.Uint64   `json:"eip1283DisableTransition,omitempty"`
+
+	DustProtectionTransition xchain.Uint64 `json:"dustProtectionTransition,omitempty"`
+	NonceCapIncrement        xchain.Uint64 `json:"nonceCapIncrement,omitempty"`
+	RemoveDustContracts      bool          `json:"removeDustContracts,omitempty"`
+
+	GasLimitBoundDivisor xchain.Uint64 `json:"gasLimitBoundDivisor,omitempty"`
+
+	Registrar *common.Address `json:"registrar,omitempty"`
+
+	ApplyReward bool `json:"applyReward,omitempty"`
+
+	MaxCodeSize                             xchain.Uint64   `json:"maxCodeSize,omitempty"`
+	MaxTransactionSize                      xchain.Uint64   `json:"maxTransactionSize,omitempty"`
+	MaxCodeSizeTransition                   xchain.Uint64   `json:"maxCodeSizeTransition,omitempty"`
+	TransactionPermissionContract           *common.Address `json:"transactionPermissionContract,omitempty"`
+	TransactionPermissionContractTransition xchain.Uint64   `json:"transactionPermissionContractTransition,omitempty"`
+	WASMActivationTransition                xchain.Uint64   `json:"wasmActivationTransition,omitempty"`
+	KIP4Transition                          xchain.Uint64   `json:"kip4Transition,omitempty"`
+	KIP6Transition                          xchain.Uint64   `json:"kip6Transition,omitempty"`
 }
