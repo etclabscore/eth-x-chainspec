@@ -40,7 +40,7 @@ func TestJSONUnmarshaling(t *testing.T) {
 
 type chainMarshalCase struct {
 	chainFile string
-	want      *ParityConfig
+	want      *Config
 }
 
 func mustBlockReward(m map[xchain.Uint64]string) *xchain.BlockReward {
@@ -66,11 +66,11 @@ func mustBTreeMap(m map[xchain.Uint64]xchain.Uint64) *xchain.BTreeMap {
 var testCases = []chainMarshalCase{
 	{
 		filepath.Join(testChainsJSONDir, "callisto.json"),
-		&ParityConfig{
+		&Config{
 			Name: "Callisto",
-			EngineOpt: ParityConfigEngines{
-				ParityConfigEngineEthash: &ParityConfigEngineEthash{
-					Params: ParityConfigEngineEthashParams{
+			EngineOpt: ConfigEngines{
+				ParityConfigEngineEthash: &ConfigEngineEthash{
+					Params: ConfigEngineEthashParams{
 						MinimumDifficulty:   xchain.Uint64(131072),
 						HomesteadTransition: xchain.Uint64(0),
 						BlockReward: mustBlockReward(
@@ -89,11 +89,11 @@ var testCases = []chainMarshalCase{
 	},
 	{
 		filepath.Join(testChainsJSONDir, "foundation.json"),
-		&ParityConfig{
+		&Config{
 			Name: "Ethereum",
-			EngineOpt: ParityConfigEngines{
-				ParityConfigEngineEthash: &ParityConfigEngineEthash{
-					Params: ParityConfigEngineEthashParams{
+			EngineOpt: ConfigEngines{
+				ParityConfigEngineEthash: &ConfigEngineEthash{
+					Params: ConfigEngineEthashParams{
 						MinimumDifficulty:   xchain.Uint64(131072),
 						HomesteadTransition: xchain.Uint64(1150000),
 						BlockReward: mustBlockReward(
@@ -121,7 +121,7 @@ func testChainFile(f string) (err error) {
 		return err
 	}
 
-	p := ParityConfig{}
+	p := Config{}
 	err = json.Unmarshal(by, &p)
 	if err != nil {
 		return fmt.Errorf("%s - %s", f, err)
@@ -149,7 +149,7 @@ func testChainFile(f string) (err error) {
 	return nil
 }
 
-func assertSameEthashParams(chainFile string, p1, p2 *ParityConfigEngineEthash) error {
+func assertSameEthashParams(chainFile string, p1, p2 *ConfigEngineEthash) error {
 	if p1.Params.MinimumDifficulty != p1.Params.MinimumDifficulty {
 		return fmt.Errorf("%s - got: %v, want: %v", chainFile, p1.Params.MinimumDifficulty, p1.Params.MinimumDifficulty)
 	}

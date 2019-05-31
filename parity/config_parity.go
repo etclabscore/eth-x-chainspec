@@ -5,28 +5,28 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 )
 
-// ParityConfig is the data structure for Parity-Ethereum's chain configuration.
-type ParityConfig struct {
-	Name      string              `json:"name"`
-	DataDir   string              `json:"dataDir"`
-	EngineOpt ParityConfigEngines `json:"engine"`
-	Params    *ParityConfigParams `json:"params"`
+// Config is the data structure for Parity-Ethereum's chain configuration.
+type Config struct {
+	Name      string        `json:"name"`
+	DataDir   string        `json:"dataDir"`
+	EngineOpt ConfigEngines `json:"engine"`
+	Params    *ConfigParams `json:"params"`
 }
 
-type ParityConfigEngines struct {
-	ParityConfigEngineEthash         *ParityConfigEngineEthash         `json:"Ethash,omitempty"`
-	ParityConfigEngineInstantSeal    *ParityConfigEngineInstantSeal    `json:"instantSeal,omitempty"`
-	ParityConfigEngineClique         *ParityConfigEngineClique         `json:"Clique,omitempty"`
-	ParityConfigEngineAuthorityRound *ParityConfigEngineAuthorityRound `json:"authorityRound,omitempty"`
+type ConfigEngines struct {
+	ParityConfigEngineEthash         *ConfigEngineEthash         `json:"Ethash,omitempty"`
+	ParityConfigEngineInstantSeal    *ConfigEngineInstantSeal    `json:"instantSeal,omitempty"`
+	ParityConfigEngineClique         *ConfigEngineClique         `json:"Clique,omitempty"`
+	ParityConfigEngineAuthorityRound *ConfigEngineAuthorityRound `json:"authorityRound,omitempty"`
 }
 
 // ParityConfigEngine is the data structure for a consensus engine.
-type ParityConfigEngineEthash struct {
-	Params ParityConfigEngineEthashParams `json:"params"`
+type ConfigEngineEthash struct {
+	Params ConfigEngineEthashParams `json:"params"`
 }
 
 // ParityConfigEngineParamsEthash is the data structure for the Ethash consensus engine parameters.
-type ParityConfigEngineEthashParams struct {
+type ConfigEngineEthashParams struct {
 	MinimumDifficulty                    xchain.Uint64 `json:"minimumDifficulty,omitempty"`
 	DifficultyBoundDivisor               xchain.Uint64 `json:"difficultyBoundDivisor,omitempty"`
 	DifficultyIncrementDivisor           xchain.Uint64 `json:"difficultyIncrementDivisor,omitempty"`
@@ -61,29 +61,29 @@ type ParityConfigEngineEthashParams struct {
 	ProgPowTransition   xchain.Uint64 `json:"progPowTransition,omitempty"`
 }
 
-type ParityConfigEngineInstantSeal struct {
-	Params ParityConfigEngineInstantSealParams `json:"params"`
+type ConfigEngineInstantSeal struct {
+	Params ConfigEngineInstantSealParams `json:"params"`
 }
 
-type ParityConfigEngineInstantSealParams struct {
+type ConfigEngineInstantSealParams struct {
 	MillisecondTimestamp bool `json:"millisecondTimestamp,omitempty"`
 }
 
-type ParityConfigEngineClique struct {
-	Params ParityConfigEngineCliqueParams `json:"params"`
+type ConfigEngineClique struct {
+	Params ConfigEngineCliqueParams `json:"params"`
 }
 
-type ParityConfigEngineCliqueParams struct {
+type ConfigEngineCliqueParams struct {
 	Period xchain.Uint64 `json:"period,omitempty"`
 	Epoch  xchain.Uint64 `json:"epoch,omitempty"`
 }
 
-type ParityConfigEngineAuthorityRound struct {
-	Params ParityConfigEngineAuthorityRoundParams `json:"params"`
+type ConfigEngineAuthorityRound struct {
+	Params ConfigEngineAuthorityRoundParams `json:"params"`
 }
 
-type ParityConfigEngineAuthorityRoundParams struct {
+type ConfigEngineAuthorityRoundParams struct {
 }
 
-type ParityConfigParams struct {
+type ConfigParams struct {
 }
