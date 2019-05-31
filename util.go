@@ -1,3 +1,7 @@
+// Package xchain @utils.go contains utilites for data structure manipulation.
+// At the time of writing these are pertinent only to Parity data values, and
+// might move to that package at some point.
+
 package xchain
 
 import (

@@ -1,4 +1,4 @@
-package xchain
+package parity
 
 import (
 	"encoding/json"
@@ -9,15 +9,16 @@ import (
 	"reflect"
 	"testing"
 
+	xchain ".."
 	"github.com/davecgh/go-spew/spew"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 )
 
-var testChainsJSONDir = "./parity-chainspecs"
+var testChainsJSONDir = "./chainspecs"
 
 func TestUint64UnmarshalJSON(t *testing.T) {
 	ex1 := `"0xC3500"`
-	u := new(Uint64)
+	u := new(xchain.Uint64)
 	err := u.UnmarshalJSON([]byte(ex1))
 	if err != nil {
 		t.Fatal(err)
@@ -42,8 +43,8 @@ type chainMarshalCase struct {
 	want      *ParityConfig
 }
 
-func mustBlockReward(m map[Uint64]string) *BlockReward {
-	br := BlockReward{}
+func mustBlockReward(m map[xchain.Uint64]string) *xchain.BlockReward {
+	br := xchain.BlockReward{}
 	for k, v := range m {
 		wantBR, ok := big.NewInt(0).SetString(v, 16)
 		if !ok {
@@ -54,8 +55,8 @@ func mustBlockReward(m map[Uint64]string) *BlockReward {
 	return &br
 }
 
-func mustBTreeMap(m map[Uint64]Uint64) *BTreeMap {
-	bt := BTreeMap{}
+func mustBTreeMap(m map[xchain.Uint64]xchain.Uint64) *xchain.BTreeMap {
+	bt := xchain.BTreeMap{}
 	for k, v := range m {
 		bt[k] = v
 	}
@@ -70,16 +71,16 @@ var testCases = []chainMarshalCase{
 			EngineOpt: ParityConfigEngines{
 				ParityConfigEngineEthash: &ParityConfigEngineEthash{
 					Params: ParityConfigEngineEthashParams{
-						MinimumDifficulty:   Uint64(131072),
-						HomesteadTransition: Uint64(0),
+						MinimumDifficulty:   xchain.Uint64(131072),
+						HomesteadTransition: xchain.Uint64(0),
 						BlockReward: mustBlockReward(
-							map[Uint64]string{
-								Uint64(0): "16c4abbebea0100000",
+							map[xchain.Uint64]string{
+								xchain.Uint64(0): "16c4abbebea0100000",
 							},
 						),
-						EIP100BTransition: Uint64(20),
-						DifficultyBombDelays: mustBTreeMap(map[Uint64]Uint64{
-							Uint64(20): Uint64(3000000),
+						EIP100BTransition: xchain.Uint64(20),
+						DifficultyBombDelays: mustBTreeMap(map[xchain.Uint64]xchain.Uint64{
+							xchain.Uint64(20): xchain.Uint64(3000000),
 						}),
 					},
 				},
@@ -93,19 +94,19 @@ var testCases = []chainMarshalCase{
 			EngineOpt: ParityConfigEngines{
 				ParityConfigEngineEthash: &ParityConfigEngineEthash{
 					Params: ParityConfigEngineEthashParams{
-						MinimumDifficulty:   Uint64(131072),
-						HomesteadTransition: Uint64(1150000),
+						MinimumDifficulty:   xchain.Uint64(131072),
+						HomesteadTransition: xchain.Uint64(1150000),
 						BlockReward: mustBlockReward(
-							map[Uint64]string{
-								Uint64(0):       "4563918244f40000",
-								Uint64(4370000): "29a2241af62c0000",
-								Uint64(7280000): "1bc16d674ec80000",
+							map[xchain.Uint64]string{
+								xchain.Uint64(0):       "4563918244f40000",
+								xchain.Uint64(4370000): "29a2241af62c0000",
+								xchain.Uint64(7280000): "1bc16d674ec80000",
 							},
 						),
-						EIP100BTransition: Uint64(4370000),
-						DifficultyBombDelays: mustBTreeMap(map[Uint64]Uint64{
-							Uint64(4370000): Uint64(3000000),
-							Uint64(7280000): Uint64(2000000),
+						EIP100BTransition: xchain.Uint64(4370000),
+						DifficultyBombDelays: mustBTreeMap(map[xchain.Uint64]xchain.Uint64{
+							xchain.Uint64(4370000): xchain.Uint64(3000000),
+							xchain.Uint64(7280000): xchain.Uint64(2000000),
 						}),
 					},
 				},
