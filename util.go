@@ -34,7 +34,13 @@ func (u *Uint64) UnmarshalJSON(input []byte) error {
 }
 
 func (u *Uint64) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("0x%x", u)), nil
+	x := hexutil.Uint64(uint64(*u))
+	return json.Marshal(x)
+}
+
+// MarshalText implements encoding.TextMarshaler.
+func (u Uint64) MarshalText() ([]byte, error) {
+	return hexutil.Uint64(u).MarshalText()
 }
 
 type BlockReward map[Uint64]*hexutil.Big
@@ -45,7 +51,8 @@ func (br *BlockReward) UnmarshalJSON(input []byte) error {
 		if err := hb.UnmarshalJSON(input); err != nil {
 			return err
 		}
-		*br = BlockReward{Uint64(0): hb}
+		zero := Uint64(0)
+		*br = BlockReward{zero: hb}
 		return nil
 	}
 
@@ -72,7 +79,7 @@ func (br *BlockReward) UnmarshalJSON(input []byte) error {
 	return nil
 }
 
-type BTreeMap map[Uint64]Uint64
+type BTreeMap map[Uint64]*Uint64
 
 func (btm *BTreeMap) UnmarshalJSON(input []byte) error {
 	type IntermediateMap map[string]interface{}
@@ -104,7 +111,7 @@ func (btm *BTreeMap) UnmarshalJSON(input []byte) error {
 				return fmt.Errorf("could not assert btree map type")
 			}
 		}
-		bbtm[ku] = vu
+		bbtm[ku] = &vu
 	}
 	*btm = bbtm
 	return nil
