@@ -20,5 +20,17 @@
           "maxCodeSize": "0x6000",
           "maxCodeSizeTransition": "0x6ea050",
           "wasmActivationTransition": "0x6ea050"
+     },
+     "genesis": {
+          "seal": {
+               "ethereum": null
+          },
+          "difficulty": "0x20000",
+          "author": null,
+          "timestamp": null,
+          "parentHash": null,
+          "extraData": "",
+          "gasLimit": "0x800000",
+          "stateRoot": null
      }
 }

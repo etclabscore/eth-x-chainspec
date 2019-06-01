@@ -26,5 +26,20 @@
           "eip155Transition": "0x7fffffffffffffff",
           "gasLimitBoundDivisor": "0x400",
           "registrar": "0xc6d9d2cd449a754c494264e1809c50e34d64562b"
+     },
+     "genesis": {
+          "seal": {
+               "ethereum": {
+                    "nonce": "0x42",
+                    "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
+               }
+          },
+          "difficulty": "0x400000000",
+          "author": "0x0000000000000000000000000000000000000000",
+          "timestamp": "0x0",
+          "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extraData": "0x11bbe8db4e347b4e8c937c1c8370e4b5ed33adb3db69cbdb7a38e1e50b1b82fa",
+          "gasLimit": "0x1388",
+          "stateRoot": null
      }
 }

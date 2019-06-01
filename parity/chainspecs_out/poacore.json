@@ -18,5 +18,17 @@
           "eip1014Transition": "0x82f46e",
           "eip1052Transition": "0x82f46e",
           "gasLimitBoundDivisor": "0x400"
+     },
+     "genesis": {
+          "seal": {
+               "ethereum": null
+          },
+          "difficulty": "0x20000",
+          "author": null,
+          "timestamp": null,
+          "parentHash": null,
+          "extraData": "",
+          "gasLimit": "0x663be0",
+          "stateRoot": null
      }
 }

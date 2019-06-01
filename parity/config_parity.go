@@ -7,10 +7,22 @@ import (
 
 // Config is the data structure for Parity-Ethereum's chain configuration.
 type Config struct {
-	Name      string        `json:"name"`
-	DataDir   string        `json:"dataDir"`
-	EngineOpt ConfigEngines `json:"engine"`
-	Params    *ConfigParams `json:"params"`
+	Name      string          `json:"name"`
+	DataDir   string          `json:"dataDir"`
+	EngineOpt ConfigEngines   `json:"engine"`
+	Params    *ConfigParams   `json:"params"`
+	Genesis   *ConfigGenesis  `json:"genesis"`
+	Accounts  *ConfigAccounts `json:"accounts"`
+}
+
+type ConfigAccounts map[string]ConfigAccountValue
+
+type ConfigAccountValue struct {
+	// Balance xchain.Big `json:"balance"` // TODO
+	Builtin *ConfigAccountValueBuiltin `json:"builtin"`
+}
+
+type ConfigAccountValueBuiltin struct {
 }
 
 type ConfigEngines struct {
@@ -140,4 +152,24 @@ type ConfigParams struct {
 	WASMActivationTransition                *xchain.Uint64  `json:"wasmActivationTransition,omitempty"`
 	KIP4Transition                          *xchain.Uint64  `json:"kip4Transition,omitempty"`
 	KIP6Transition                          *xchain.Uint64  `json:"kip6Transition,omitempty"`
+}
+
+type ConfigGenesis struct {
+	Seal       *ConfigGenesisSeal `json:"seal"`
+	Difficulty *xchain.Uint64     `json:"difficulty"`
+	Author     *common.Address    `json:"author"`
+	Timestamp  *xchain.Uint64     `json:"timestamp"`
+	ParentHash *common.Hash       `json:"parentHash"`
+	ExtraData  string             `json:"extraData"`
+	GasLimit   *xchain.Uint64     `json:"gasLimit"`
+	StateRoot  *common.Hash       `json:"stateRoot"`
+}
+
+type ConfigGenesisSeal struct {
+	Ethereum *ConfigGenesisEthereumSeal `json:"ethereum"`
+}
+
+type ConfigGenesisEthereumSeal struct {
+	Nonce   *xchain.Uint64 `json:"nonce"`
+	MixHash *common.Hash   `json:"mixHash"`
 }

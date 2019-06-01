@@ -26,6 +26,16 @@ func TestUint64UnmarshalJSON(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+
+	ex2 := `"0x1"`
+	u = new(xchain.Uint64)
+	err = u.UnmarshalJSON([]byte(ex2))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if *u != 1 {
+		t.Fatalf("got: %v, want: %v", *u, 1)
+	}
 }
 
 func TestJSONUnmarshaling(t *testing.T) {
@@ -342,10 +352,10 @@ func TestChainSpecJSONReproducability(t *testing.T) {
 		p := Config{}
 		err = json.Unmarshal(b, &p)
 		if err != nil {
-			t.Fatal(err)
+			t.Fatal(spew.Sdump(p), f.Name(), err)
 		}
 
-		outb, err := json.MarshalIndent(p, "", "     ")
+		outb, err := json.MarshalIndent(&p, "", "     ")
 		if err != nil {
 			t.Fatal(err)
 		}

@@ -30,5 +30,17 @@
           "wasmActivationTransition": "0x64b540",
           "kip4Transition": "0x8c6180",
           "kip6Transition": "0x8c6180"
+     },
+     "genesis": {
+          "seal": {
+               "ethereum": null
+          },
+          "difficulty": "0x20000",
+          "author": null,
+          "timestamp": null,
+          "parentHash": null,
+          "extraData": "",
+          "gasLimit": "0x5b8d80",
+          "stateRoot": null
      }
 }

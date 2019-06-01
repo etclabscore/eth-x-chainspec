@@ -21,5 +21,17 @@
           "gasLimitBoundDivisor": "0x400",
           "registrar": "0xfab104398bbefbd47752e7702d9fe23047e1bca3",
           "wasmActivationTransition": "0xa"
+     },
+     "genesis": {
+          "seal": {
+               "ethereum": null
+          },
+          "difficulty": "0x20000",
+          "author": null,
+          "timestamp": null,
+          "parentHash": null,
+          "extraData": "",
+          "gasLimit": "0x5b8d80",
+          "stateRoot": null
      }
 }

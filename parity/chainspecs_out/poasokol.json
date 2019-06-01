@@ -20,5 +20,17 @@
           "eip1283Transition": "0x62a32c",
           "eip1283DisableTransition": "0x6b36e0",
           "gasLimitBoundDivisor": "0x400"
+     },
+     "genesis": {
+          "seal": {
+               "ethereum": null
+          },
+          "difficulty": "0x20000",
+          "author": null,
+          "timestamp": null,
+          "parentHash": null,
+          "extraData": "",
+          "gasLimit": "0x663be0",
+          "stateRoot": null
      }
 }
