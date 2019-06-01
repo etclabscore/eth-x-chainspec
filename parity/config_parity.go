@@ -28,7 +28,7 @@ type ConfigAccountValueBuiltin struct {
 type ConfigEngines struct {
 	ParityConfigEngineEthash         *ConfigEngineEthash         `json:"Ethash,omitempty"`
 	ParityConfigEngineInstantSeal    *ConfigEngineInstantSeal    `json:"instantSeal,omitempty"`
-	ParityConfigEngineClique         *ConfigEngineClique         `json:"Clique,omitempty"`
+	ParityConfigEngineClique         *ConfigEngineClique         `json:"clique,omitempty"`
 	ParityConfigEngineAuthorityRound *ConfigEngineAuthorityRound `json:"authorityRound,omitempty"`
 }
 
@@ -170,6 +170,6 @@ type ConfigGenesisSeal struct {
 }
 
 type ConfigGenesisEthereumSeal struct {
-	Nonce   *xchain.Uint64 `json:"nonce"`
-	MixHash *common.Hash   `json:"mixHash"`
+	Nonce   *xchain.BlockNonce `json:"nonce"`
+	MixHash *common.Hash       `json:"mixHash"`
 }

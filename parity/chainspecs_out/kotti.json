@@ -2,7 +2,7 @@
      "name": "Kotti Testnet",
      "dataDir": "kotti",
      "engine": {
-          "Clique": {
+          "clique": {
                "params": {
                     "period": "0xf",
                     "epoch": "0x7530"
@@ -25,7 +25,7 @@
      "genesis": {
           "seal": {
                "ethereum": {
-                    "nonce": "0x0",
+                    "nonce": "0x0000000000000000",
                     "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
                }
           },
