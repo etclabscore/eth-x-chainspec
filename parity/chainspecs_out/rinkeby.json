@@ -1,0 +1,36 @@
+{
+     "name": "Rinkeby",
+     "dataDir": "rinkeby",
+     "engine": {
+          "Clique": {
+               "params": {
+                    "period": "0xf",
+                    "epoch": "0x7530"
+               }
+          }
+     },
+     "params": {
+          "accountStartNonce": "0x0",
+          "maximumExtraDataSize": "0xffff",
+          "minGasLimit": "0x1388",
+          "networkID": "0x4",
+          "chainID": "0x4",
+          "eip150Transition": "0x2",
+          "eip160Transition": "0x0",
+          "eip161abcTransition": "0x0",
+          "eip161dTransition": "0x0",
+          "eip155Transition": "0x3",
+          "eip140Transition": "0xfcc25",
+          "eip145Transition": "0x37db77",
+          "eip211Transition": "0xfcc25",
+          "eip214Transition": "0xfcc25",
+          "eip658Transition": "0xfcc25",
+          "eip1014Transition": "0x37db77",
+          "eip1052Transition": "0x37db77",
+          "eip1283Transition": "0x37db77",
+          "eip1283DisableTransition": "0x41efd2",
+          "gasLimitBoundDivisor": "0x400",
+          "maxCodeSize": "0x6000",
+          "maxCodeSizeTransition": "0x0"
+     }
+}

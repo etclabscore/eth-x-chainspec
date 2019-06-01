@@ -1,0 +1,36 @@
+{
+     "name": "Görli Testnet",
+     "dataDir": "goerli",
+     "engine": {
+          "Clique": {
+               "params": {
+                    "period": "0xf",
+                    "epoch": "0x7530"
+               }
+          }
+     },
+     "params": {
+          "accountStartNonce": "0x0",
+          "maximumExtraDataSize": "0xffff",
+          "minGasLimit": "0x1388",
+          "networkID": "0x5",
+          "chainID": "0x5",
+          "eip150Transition": "0x0",
+          "eip160Transition": "0x0",
+          "eip161abcTransition": "0x0",
+          "eip161dTransition": "0x0",
+          "eip155Transition": "0x0",
+          "eip140Transition": "0x0",
+          "eip145Transition": "0x0",
+          "eip211Transition": "0x0",
+          "eip214Transition": "0x0",
+          "eip658Transition": "0x0",
+          "eip1014Transition": "0x0",
+          "eip1052Transition": "0x0",
+          "eip1283Transition": "0x0",
+          "eip1283DisableTransition": "0x0",
+          "gasLimitBoundDivisor": "0x400",
+          "maxCodeSize": "0x6000",
+          "maxCodeSizeTransition": "0x0"
+     }
+}

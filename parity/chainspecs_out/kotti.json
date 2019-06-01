@@ -1,0 +1,25 @@
+{
+     "name": "Kotti Testnet",
+     "dataDir": "kotti",
+     "engine": {
+          "Clique": {
+               "params": {
+                    "period": "0xf",
+                    "epoch": "0x7530"
+               }
+          }
+     },
+     "params": {
+          "accountStartNonce": "0x0",
+          "maximumExtraDataSize": "0xffff",
+          "minGasLimit": "0x1388",
+          "networkID": "0x6",
+          "chainID": "0x6",
+          "eip150Transition": "0x0",
+          "eip160Transition": "0x0",
+          "eip161abcTransition": "0x7fffffffffffffff",
+          "eip161dTransition": "0x7fffffffffffffff",
+          "eip155Transition": "0x0",
+          "gasLimitBoundDivisor": "0x400"
+     }
+}

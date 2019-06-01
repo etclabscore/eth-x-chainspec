@@ -1,0 +1,39 @@
+{
+     "name": "Ellaism",
+     "dataDir": "ellaism",
+     "engine": {
+          "Ethash": {
+               "params": {
+                    "minimumDifficulty": "0x20000",
+                    "difficultyBoundDivisor": "0x800",
+                    "durationLimit": "0xd",
+                    "homesteadTransition": "0x0",
+                    "blockReward": {
+                         "0x0": "0x4563918244f40000"
+                    },
+                    "bombDefuseTransition": "0x0",
+                    "eip100bTransition": "0x1e8480",
+                    "ecip1017EraRounds": "0x989680"
+               }
+          }
+     },
+     "params": {
+          "accountStartNonce": "0x0",
+          "maximumExtraDataSize": "0x20",
+          "minGasLimit": "0x1388",
+          "networkID": "0x40",
+          "chainID": "0x40",
+          "eip150Transition": "0x0",
+          "eip160Transition": "0x0",
+          "eip161abcTransition": "0x7fffffffffffffff",
+          "eip161dTransition": "0x7fffffffffffffff",
+          "eip155Transition": "0x0",
+          "eip140Transition": "0x1e8480",
+          "eip211Transition": "0x1e8480",
+          "eip214Transition": "0x1e8480",
+          "eip658Transition": "0x1e8480",
+          "gasLimitBoundDivisor": "0x400",
+          "registrar": "0x3bb2bb5c6c9c9b7f4ef430b47dc7e026310042ea",
+          "wasmActivationTransition": "0x1e8480"
+     }
+}

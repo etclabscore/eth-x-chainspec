@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"math/big"
+	"os"
 	"path/filepath"
 	"reflect"
 	"testing"
@@ -318,5 +319,39 @@ func TestJSONMarshaling(t *testing.T) {
 		t.Log(string(b))
 		t.Log(string(out))
 		t.Fatal(diff)
+	}
+}
+
+func TestChainSpecJSONReproducability(t *testing.T) {
+	outTestChainsJSONDir := testChainsJSONDir + "_out"
+	if err := os.MkdirAll(outTestChainsJSONDir, os.ModePerm); err != nil {
+		t.Fatal(err)
+	}
+
+	ffs, err := ioutil.ReadDir(testChainsJSONDir)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	for _, f := range ffs {
+		b, err := ioutil.ReadFile(filepath.Join(testChainsJSONDir, f.Name()))
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		p := Config{}
+		err = json.Unmarshal(b, &p)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		outb, err := json.MarshalIndent(p, "", "     ")
+		if err != nil {
+			t.Fatal(err)
+		}
+		err = ioutil.WriteFile(filepath.Join(outTestChainsJSONDir, f.Name()), outb, os.ModePerm)
+		if err != nil {
+			t.Fatal(err)
+		}
 	}
 }

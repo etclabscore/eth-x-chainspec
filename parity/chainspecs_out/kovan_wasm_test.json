@@ -1,0 +1,25 @@
+{
+     "name": "Kovan (Test)",
+     "dataDir": "kovan-test",
+     "engine": {
+          "authorityRound": {
+               "params": {}
+          }
+     },
+     "params": {
+          "maximumExtraDataSize": "0x20",
+          "minGasLimit": "0x1388",
+          "networkID": "0x2a",
+          "forkBlock": "0x419228",
+          "eip98Transition": "0x0",
+          "eip155Transition": "0xf4240",
+          "validateChainIdTransition": "0xf4240",
+          "eip140Transition": "0x4d50f8",
+          "eip211Transition": "0x4d50f8",
+          "eip214Transition": "0x4d50f8",
+          "eip658Transition": "0x4d50f8",
+          "gasLimitBoundDivisor": "0x400",
+          "registrar": "0xfab104398bbefbd47752e7702d9fe23047e1bca3",
+          "wasmActivationTransition": "0xa"
+     }
+}

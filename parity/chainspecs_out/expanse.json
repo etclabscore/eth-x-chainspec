@@ -1,0 +1,49 @@
+{
+     "name": "Expanse",
+     "dataDir": "expanse",
+     "engine": {
+          "Ethash": {
+               "params": {
+                    "minimumDifficulty": "0x20000",
+                    "difficultyBoundDivisor": "0x800",
+                    "difficultyIncrementDivisor": "0x3c",
+                    "metropolisDifficultyIncrementDivisor": "0x1e",
+                    "durationLimit": "0x3c",
+                    "homesteadTransition": "0x30d40",
+                    "blockReward": {
+                         "0x0": "0x6f05b59d3b200000",
+                         "0xc3500": "0x3782dace9d900000"
+                    },
+                    "difficultyHardforkTransition": "0x59d9",
+                    "difficultyHardforkBoundDivisor": "0x200",
+                    "bombDefuseTransition": "0x30d40",
+                    "eip100bTransition": "0xc3500",
+                    "difficultyBombDelays": {
+                         "0xc3500": "0x2dc6c0"
+                    },
+                    "expip2Transition": "0xc3500",
+                    "expip2DurationLimit": "0x1e"
+               }
+          }
+     },
+     "params": {
+          "accountStartNonce": "0x0",
+          "maximumExtraDataSize": "0x20",
+          "minGasLimit": "0x1388",
+          "networkID": "0x1",
+          "chainID": "0x2",
+          "subprotocolName": "exp",
+          "forkBlock": "0xdbba0",
+          "eip150Transition": "0x927c0",
+          "eip160Transition": "0x927c0",
+          "eip161abcTransition": "0x927c0",
+          "eip161dTransition": "0x927c0",
+          "eip155Transition": "0x927c0",
+          "eip140Transition": "0xc3500",
+          "eip211Transition": "0xc3500",
+          "eip214Transition": "0xc3500",
+          "eip658Transition": "0xc3500",
+          "gasLimitBoundDivisor": "0x400",
+          "registrar": "0x6c221ca53705f3497ec90ca7b84c59ae7382fc21"
+     }
+}
