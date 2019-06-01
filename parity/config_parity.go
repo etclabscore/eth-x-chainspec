@@ -18,11 +18,32 @@ type Config struct {
 type ConfigAccounts map[string]ConfigAccountValue
 
 type ConfigAccountValue struct {
-	// Balance xchain.Big `json:"balance"` // TODO
+	Balance string                     `json:"balance"` // TODO
 	Builtin *ConfigAccountValueBuiltin `json:"builtin"`
 }
 
 type ConfigAccountValueBuiltin struct {
+	Name       *string                          `json:"name"`
+	PricingOpt ConfigAccountValueBuiltinPricing `json:"pricing"`
+	ActivateAt *xchain.Uint64                   `json:"activate_at"`
+}
+
+type ConfigAccountValueBuiltinPricing struct {
+	ConfigAccountValueBuiltinPricingLinear          *ConfigAccountValueBuiltinPricingLinear          `json:"linear,omitempty"`
+	ConfigAccountValueBuiltinPricingModexp          *ConfigAccountValueBuiltinPricingModexp          `json:"modexp,omitempty"`
+	ConfigAccountValueBuiltinPricingAltBN128Pairing *ConfigAccountValueBuiltinPricingAltBN128Pairing `json:"alt_bn128_pairing,omitempty"`
+}
+
+type ConfigAccountValueBuiltinPricingLinear struct {
+	Base uint64 `json:"base"`
+	Word uint64 `json:"word"`
+}
+type ConfigAccountValueBuiltinPricingModexp struct {
+	Divisor uint64 `json:"divisor"`
+}
+type ConfigAccountValueBuiltinPricingAltBN128Pairing struct {
+	Base uint64 `json:"base"`
+	Pair uint64 `json:"pair"`
 }
 
 type ConfigEngines struct {

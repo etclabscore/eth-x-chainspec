@@ -50,18 +50,59 @@
      },
      "accounts": {
           "0000000000000000000000000000000000000001": {
-               "builtin": {}
+               "balance": "1",
+               "builtin": {
+                    "name": "ecrecover",
+                    "pricing": {
+                         "linear": {
+                              "base": 3000,
+                              "word": 0
+                         }
+                    },
+                    "activate_at": null
+               }
           },
           "0000000000000000000000000000000000000002": {
-               "builtin": {}
+               "balance": "1",
+               "builtin": {
+                    "name": "sha256",
+                    "pricing": {
+                         "linear": {
+                              "base": 60,
+                              "word": 12
+                         }
+                    },
+                    "activate_at": null
+               }
           },
           "0000000000000000000000000000000000000003": {
-               "builtin": {}
+               "balance": "1",
+               "builtin": {
+                    "name": "ripemd160",
+                    "pricing": {
+                         "linear": {
+                              "base": 600,
+                              "word": 120
+                         }
+                    },
+                    "activate_at": null
+               }
           },
           "0000000000000000000000000000000000000004": {
-               "builtin": {}
+               "balance": "1",
+               "builtin": {
+                    "name": "identity",
+                    "pricing": {
+                         "linear": {
+                              "base": 15,
+                              "word": 3
+                         }
+                    },
+                    "activate_at": null
+               }
           },
           "102e61f5d8f9bc71d0ad4a084df4e65e05ce0e1c": {
+               "balance": "1606938044258990275541962092341162602522202993782792835301376",
                "builtin": null
           }
      }

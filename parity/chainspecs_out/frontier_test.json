@@ -44,16 +44,56 @@
      },
      "accounts": {
           "0000000000000000000000000000000000000001": {
-               "builtin": {}
+               "balance": "",
+               "builtin": {
+                    "name": "ecrecover",
+                    "pricing": {
+                         "linear": {
+                              "base": 3000,
+                              "word": 0
+                         }
+                    },
+                    "activate_at": null
+               }
           },
           "0000000000000000000000000000000000000002": {
-               "builtin": {}
+               "balance": "",
+               "builtin": {
+                    "name": "sha256",
+                    "pricing": {
+                         "linear": {
+                              "base": 60,
+                              "word": 12
+                         }
+                    },
+                    "activate_at": null
+               }
           },
           "0000000000000000000000000000000000000003": {
-               "builtin": {}
+               "balance": "",
+               "builtin": {
+                    "name": "ripemd160",
+                    "pricing": {
+                         "linear": {
+                              "base": 600,
+                              "word": 120
+                         }
+                    },
+                    "activate_at": null
+               }
           },
           "0000000000000000000000000000000000000004": {
-               "builtin": {}
+               "balance": "",
+               "builtin": {
+                    "name": "identity",
+                    "pricing": {
+                         "linear": {
+                              "base": 15,
+                              "word": 3
+                         }
+                    },
+                    "activate_at": null
+               }
           }
      }
 }

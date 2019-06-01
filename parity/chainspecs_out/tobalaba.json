@@ -35,39 +35,122 @@
      },
      "accounts": {
           "0x0000000000000000000000000000000000000001": {
-               "builtin": {}
+               "balance": "",
+               "builtin": {
+                    "name": "ecrecover",
+                    "pricing": {
+                         "linear": {
+                              "base": 3000,
+                              "word": 0
+                         }
+                    },
+                    "activate_at": "0x6ea050"
+               }
           },
           "0x0000000000000000000000000000000000000002": {
-               "builtin": {}
+               "balance": "",
+               "builtin": {
+                    "name": "sha256",
+                    "pricing": {
+                         "linear": {
+                              "base": 60,
+                              "word": 12
+                         }
+                    },
+                    "activate_at": "0x6ea050"
+               }
           },
           "0x0000000000000000000000000000000000000003": {
-               "builtin": {}
+               "balance": "",
+               "builtin": {
+                    "name": "ripemd160",
+                    "pricing": {
+                         "linear": {
+                              "base": 600,
+                              "word": 120
+                         }
+                    },
+                    "activate_at": "0x6ea050"
+               }
           },
           "0x0000000000000000000000000000000000000004": {
-               "builtin": {}
+               "balance": "",
+               "builtin": {
+                    "name": "identity",
+                    "pricing": {
+                         "linear": {
+                              "base": 15,
+                              "word": 3
+                         }
+                    },
+                    "activate_at": "0x6ea050"
+               }
           },
           "0x0000000000000000000000000000000000000005": {
-               "builtin": {}
+               "balance": "",
+               "builtin": {
+                    "name": "modexp",
+                    "pricing": {
+                         "modexp": {
+                              "divisor": 20
+                         }
+                    },
+                    "activate_at": "0x6ea050"
+               }
           },
           "0x0000000000000000000000000000000000000006": {
-               "builtin": {}
+               "balance": "",
+               "builtin": {
+                    "name": "alt_bn128_add",
+                    "pricing": {
+                         "linear": {
+                              "base": 500,
+                              "word": 0
+                         }
+                    },
+                    "activate_at": "0x6ea050"
+               }
           },
           "0x0000000000000000000000000000000000000007": {
-               "builtin": {}
+               "balance": "",
+               "builtin": {
+                    "name": "alt_bn128_mul",
+                    "pricing": {
+                         "linear": {
+                              "base": 40000,
+                              "word": 0
+                         }
+                    },
+                    "activate_at": "0x6ea050"
+               }
           },
           "0x0000000000000000000000000000000000000008": {
-               "builtin": {}
+               "balance": "",
+               "builtin": {
+                    "name": "alt_bn128_pairing",
+                    "pricing": {
+                         "alt_bn128_pairing": {
+                              "base": 100000,
+                              "pair": 80000
+                         }
+                    },
+                    "activate_at": "0x6ea050"
+               }
           },
           "0x1000000000000000000000000000000000000005": {
+               "balance": "1",
                "builtin": null
           },
           "0x1000000000000000000000000000000000000006": {
+               "balance": "1",
                "builtin": null
           },
           "0x1000000000000000000000000000000000000007": {
+               "balance": "1",
                "builtin": null
           },
           "0x4ba15b56452521c0826a35a6f2022e1210fc519b": {
+               "balance": "0x7E37BE2022B2B09472D89C0000",
                "builtin": null
           }
      }
