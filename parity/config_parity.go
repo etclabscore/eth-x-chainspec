@@ -107,8 +107,8 @@ type ConfigEngineClique struct {
 }
 
 type ConfigEngineCliqueParams struct {
-	Period *xchain.Uint64 `json:"period,omitempty"`
-	Epoch  *xchain.Uint64 `json:"epoch,omitempty"`
+	Period uint64 `json:"period,omitempty"`
+	Epoch  uint64 `json:"epoch,omitempty"`
 }
 
 type ConfigEngineAuthorityRound struct {
@@ -116,6 +116,23 @@ type ConfigEngineAuthorityRound struct {
 }
 
 type ConfigEngineAuthorityRoundParams struct {
+	StepDuration            *xchain.Uint64                       `json:"stepDuration"`
+	BlockReward             *xchain.Uint64                       `json:"blockReward"`
+	Validators              ConfigEngineAuthorityRoundValidators `json:"validators"` // TODO
+	ValidateScoreTransition *xchain.Uint64                       `json:"validateScoreTransition"`
+	ValidateStepTransition  *xchain.Uint64                       `json:"validateStepTransition"`
+	MaximumUncleCount       *xchain.Uint64                       `json:"maximumUncleCount"`
+}
+
+type ConfigEngineAuthorityRoundValidators struct {
+	ConfigEngineAuthorityRoundValidatorsMulti    *ConfigEngineAuthorityRoundValidatorsMulti `json:"multi,omitempty"`
+	ConfigEngineAuthorityRoundValidatorsList     *[]common.Address                          `json:"list,omitempty"`
+	ConfigEngineAuthorityRoundValidatorsContract *common.Address                            `json:"contract,omitempty"`
+}
+type ConfigEngineAuthorityRoundValidatorsMulti map[string]ConfigEngineAuthorityRoundValidatorsMultiListOrContract
+type ConfigEngineAuthorityRoundValidatorsMultiListOrContract struct {
+	ConfigEngineAuthorityRoundValidatorsList         []common.Address `json:"list,omitempty"`
+	ConfigEngineAuthorityRoundValidatorsSafeContract *common.Address  `json:"safeContract,omitempty"`
 }
 
 type ConfigParams struct {
@@ -176,21 +193,21 @@ type ConfigParams struct {
 }
 
 type ConfigGenesis struct {
-	Seal       *ConfigGenesisSeal `json:"seal"`
-	Difficulty *xchain.Uint64     `json:"difficulty"`
-	Author     *common.Address    `json:"author"`
-	Timestamp  *xchain.Uint64     `json:"timestamp"`
-	ParentHash *common.Hash       `json:"parentHash"`
-	ExtraData  string             `json:"extraData"`
-	GasLimit   *xchain.Uint64     `json:"gasLimit"`
-	StateRoot  *common.Hash       `json:"stateRoot"`
+	Seal       ConfigGenesisSeal `json:"seal"`
+	Difficulty *xchain.Uint64    `json:"difficulty"`
+	Author     *common.Address   `json:"author"`
+	Timestamp  *xchain.Uint64    `json:"timestamp"`
+	ParentHash *common.Hash      `json:"parentHash"`
+	ExtraData  string            `json:"extraData"`
+	GasLimit   *xchain.Uint64    `json:"gasLimit"`
+	StateRoot  *common.Hash      `json:"stateRoot"`
 }
 
 type ConfigGenesisSeal struct {
-	Ethereum *ConfigGenesisEthereumSeal `json:"ethereum"`
+	Ethereum ConfigGenesisEthereumSeal `json:"ethereum"`
 }
 
 type ConfigGenesisEthereumSeal struct {
-	Nonce   *xchain.BlockNonce `json:"nonce"`
-	MixHash *common.Hash       `json:"mixHash"`
+	Nonce   xchain.BlockNonce `json:"nonce"`
+	MixHash common.Hash       `json:"mixHash"`
 }

@@ -3,7 +3,16 @@
      "dataDir": "",
      "engine": {
           "authorityRound": {
-               "params": {}
+               "params": {
+                    "stepDuration": "0x3",
+                    "blockReward": null,
+                    "validators": {
+                         "contract": "0x1000000000000000000000000000000000000005"
+                    },
+                    "validateScoreTransition": null,
+                    "validateStepTransition": null,
+                    "maximumUncleCount": "0xf423f"
+               }
           }
      },
      "params": {
@@ -23,7 +32,10 @@
      },
      "genesis": {
           "seal": {
-               "ethereum": null
+               "ethereum": {
+                    "nonce": "0x0000000000000000",
+                    "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
+               }
           },
           "difficulty": "0x20000",
           "author": null,

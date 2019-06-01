@@ -3,7 +3,26 @@
      "dataDir": "poacore",
      "engine": {
           "authorityRound": {
-               "params": {}
+               "params": {
+                    "stepDuration": "0x5",
+                    "blockReward": "0xde0b6b3a7640000",
+                    "validators": {
+                         "multi": {
+                              "0": {
+                                   "safeContract": "0x8bf38d4764929064f2d4d3a56520a76ab3df415b"
+                              },
+                              "5329160": {
+                                   "safeContract": "0xa105db0e6671c7b5f4f350ff1af6460e6c696e71"
+                              },
+                              "772000": {
+                                   "safeContract": "0x83451c8bc04d4ee9745ccc58edfab88037bc48cc"
+                              }
+                         }
+                    },
+                    "validateScoreTransition": null,
+                    "validateStepTransition": null,
+                    "maximumUncleCount": "0x0"
+               }
           }
      },
      "params": {
@@ -21,7 +40,10 @@
      },
      "genesis": {
           "seal": {
-               "ethereum": null
+               "ethereum": {
+                    "nonce": "0x0000000000000000",
+                    "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
+               }
           },
           "difficulty": "0x20000",
           "author": null,

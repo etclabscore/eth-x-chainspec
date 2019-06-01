@@ -4,8 +4,8 @@
      "engine": {
           "clique": {
                "params": {
-                    "period": "0xf",
-                    "epoch": "0x7530"
+                    "period": 15,
+                    "epoch": 30000
                }
           }
      },

@@ -3,7 +3,29 @@
      "dataDir": "poasokol",
      "engine": {
           "authorityRound": {
-               "params": {}
+               "params": {
+                    "stepDuration": "0x5",
+                    "blockReward": "0xde0b6b3a7640000",
+                    "validators": {
+                         "multi": {
+                              "0": {
+                                   "safeContract": "0x8bf38d4764929064f2d4d3a56520a76ab3df415b"
+                              },
+                              "362296": {
+                                   "safeContract": "0xf5ce3f5d0366d6ec551c74ccb1f67e91c56f2e34"
+                              },
+                              "4622420": {
+                                   "safeContract": "0x4c6a159659cccb033f4b2e2be0c16acc62b89ddb"
+                              },
+                              "509355": {
+                                   "safeContract": "0x03048f666359cfd3c74a1a5b9a97848bf71d5038"
+                              }
+                         }
+                    },
+                    "validateScoreTransition": null,
+                    "validateStepTransition": null,
+                    "maximumUncleCount": "0x0"
+               }
           }
      },
      "params": {
@@ -23,7 +45,10 @@
      },
      "genesis": {
           "seal": {
-               "ethereum": null
+               "ethereum": {
+                    "nonce": "0x0000000000000000",
+                    "mixHash": "0x0000000000000000000000000000000000000000000000000000000000000000"
+               }
           },
           "difficulty": "0x20000",
           "author": null,
