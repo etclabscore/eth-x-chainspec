@@ -303,6 +303,9 @@ func TestJSONMarshaling(t *testing.T) {
 		t.Fatal(err)
 	}
 
+	// Instead of using normal reflect.DeepEqual, this package does the same thing
+	// but conveniently shows the diffs between the structs, if any.
+	// This was used for the debugging noted below.
 	if diff := deep.Equal(p, p2); diff != nil {
 		// This debugging was added because if the maps for BTreeMap and BlockReward use pointers as keys,
 		// then the test fails because the addresses are not equal.
@@ -316,9 +319,4 @@ func TestJSONMarshaling(t *testing.T) {
 		t.Log(string(out))
 		t.Fatal(diff)
 	}
-
-	// if !reflect.DeepEqual(p, p2) {
-	// 	t.Fatalf("got: %v, want: %v", spew.Sdump(p), spew.Sdump(p2))
-	// }
-
 }
