@@ -160,11 +160,11 @@
           "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "extraData": "0x11bbe8db4e347b4e8c937c1c8370e4b5ed33adb3db69cbdb7a38e1e50b1b82fa",
           "gasLimit": "0x1388",
+          "gasUsed": null,
           "stateRoot": null
      },
      "accounts": {
           "0000000000000000000000000000000000000001": {
-               "balance": "",
                "builtin": {
                     "name": "ecrecover",
                     "pricing": {
@@ -172,12 +172,10 @@
                               "base": 3000,
                               "word": 0
                          }
-                    },
-                    "activate_at": null
+                    }
                }
           },
           "0000000000000000000000000000000000000002": {
-               "balance": "",
                "builtin": {
                     "name": "sha256",
                     "pricing": {
@@ -185,12 +183,10 @@
                               "base": 60,
                               "word": 12
                          }
-                    },
-                    "activate_at": null
+                    }
                }
           },
           "0000000000000000000000000000000000000003": {
-               "balance": "",
                "builtin": {
                     "name": "ripemd160",
                     "pricing": {
@@ -198,12 +194,10 @@
                               "base": 600,
                               "word": 120
                          }
-                    },
-                    "activate_at": null
+                    }
                }
           },
           "0000000000000000000000000000000000000004": {
-               "balance": "",
                "builtin": {
                     "name": "identity",
                     "pricing": {
@@ -211,9 +205,9 @@
                               "base": 15,
                               "word": 3
                          }
-                    },
-                    "activate_at": null
+                    }
                }
           }
-     }
+     },
+     "nodes": null
 }

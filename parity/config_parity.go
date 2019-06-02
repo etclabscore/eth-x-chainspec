@@ -3,29 +3,36 @@ package parity
 import (
 	xchain ".."
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereumclassic/go-ethereum/common/hexutil"
 )
 
 // Config is the data structure for Parity-Ethereum's chain configuration.
 type Config struct {
-	Name      string          `json:"name"`
-	DataDir   string          `json:"dataDir"`
-	EngineOpt ConfigEngines   `json:"engine"`
-	Params    *ConfigParams   `json:"params"`
-	Genesis   *ConfigGenesis  `json:"genesis"`
-	Accounts  *ConfigAccounts `json:"accounts"`
+	Name      string         `json:"name"`
+	DataDir   string         `json:"dataDir"`
+	EngineOpt ConfigEngines  `json:"engine"`
+	Params    *ConfigParams  `json:"params"`
+	Genesis   *ConfigGenesis `json:"genesis"`
+	Accounts  ConfigAccounts `json:"accounts"`
+	Nodes     []string       `json:"nodes"`
 }
 
 type ConfigAccounts map[string]ConfigAccountValue
 
 type ConfigAccountValue struct {
-	Balance string                     `json:"balance"` // TODO
-	Builtin *ConfigAccountValueBuiltin `json:"builtin"`
-}
+	Nonce   *xchain.ConfigAccountNonce  `json:"nonce,omitempty"`
+	Balance string                      `json:"balance,omitempty"`
+	Code    []byte                      `json:"code,omitempty"`
+	Storage map[common.Hash]common.Hash `json:"storage,omitempty"`
 
+	// core.GenesisAccount
+
+	Builtin *ConfigAccountValueBuiltin `json:"builtin,omitempty"`
+}
 type ConfigAccountValueBuiltin struct {
 	Name       *string                          `json:"name"`
-	PricingOpt ConfigAccountValueBuiltinPricing `json:"pricing"`
-	ActivateAt *xchain.Uint64                   `json:"activate_at"`
+	PricingOpt ConfigAccountValueBuiltinPricing `json:"pricing,omitempty"`
+	ActivateAt *xchain.Uint64                   `json:"activate_at,omitempty"`
 }
 
 type ConfigAccountValueBuiltinPricing struct {
@@ -145,8 +152,8 @@ type ConfigParams struct {
 
 	SubProtocolName string `json:"subprotocolName,omitempty"`
 
-	ForkBlock *xchain.Uint64 `json:"forkBlock,omitempty"`
-	ForkHash  *xchain.Uint64 `json:"forkHash,omitempty"`
+	ForkBlock     *xchain.Uint64 `json:"forkBlock,omitempty"`
+	ForkCanonHash *common.Hash   `json:"forkCanonHash,omitempty"`
 
 	EIP150Transition    *xchain.Uint64 `json:"eip150Transition,omitempty"`
 	EIP160Transition    *xchain.Uint64 `json:"eip160Transition,omitempty"`
@@ -198,8 +205,9 @@ type ConfigGenesis struct {
 	Author     *common.Address   `json:"author"`
 	Timestamp  *xchain.Uint64    `json:"timestamp"`
 	ParentHash *common.Hash      `json:"parentHash"`
-	ExtraData  string            `json:"extraData"`
+	ExtraData  hexutil.Bytes     `json:"extraData"`
 	GasLimit   *xchain.Uint64    `json:"gasLimit"`
+	GasUsed    *xchain.Uint64    `json:"gasUsed"`
 	StateRoot  *common.Hash      `json:"stateRoot"`
 }
 

@@ -49,13 +49,13 @@
           "author": null,
           "timestamp": null,
           "parentHash": null,
-          "extraData": "",
+          "extraData": "0x",
           "gasLimit": "0x663be0",
+          "gasUsed": null,
           "stateRoot": null
      },
      "accounts": {
           "0000000000000000000000000000000000000005": {
-               "balance": "",
                "builtin": {
                     "name": "modexp",
                     "pricing": {
@@ -67,7 +67,6 @@
                }
           },
           "0000000000000000000000000000000000000006": {
-               "balance": "",
                "builtin": {
                     "name": "alt_bn128_add",
                     "pricing": {
@@ -80,7 +79,6 @@
                }
           },
           "0000000000000000000000000000000000000007": {
-               "balance": "",
                "builtin": {
                     "name": "alt_bn128_mul",
                     "pricing": {
@@ -93,7 +91,6 @@
                }
           },
           "0000000000000000000000000000000000000008": {
-               "balance": "",
                "builtin": {
                     "name": "alt_bn128_pairing",
                     "pricing": {
@@ -114,8 +111,7 @@
                               "base": 3000,
                               "word": 0
                          }
-                    },
-                    "activate_at": null
+                    }
                }
           },
           "0x0000000000000000000000000000000000000002": {
@@ -127,8 +123,7 @@
                               "base": 60,
                               "word": 12
                          }
-                    },
-                    "activate_at": null
+                    }
                }
           },
           "0x0000000000000000000000000000000000000003": {
@@ -140,8 +135,7 @@
                               "base": 600,
                               "word": 120
                          }
-                    },
-                    "activate_at": null
+                    }
                }
           },
           "0x0000000000000000000000000000000000000004": {
@@ -153,17 +147,23 @@
                               "base": 15,
                               "word": 3
                          }
-                    },
-                    "activate_at": null
+                    }
                }
           },
           "0x8bf38d4764929064f2d4d3a56520a76ab3df415b": {
-               "balance": "1",
-               "builtin": null
+               "balance": "1"
           },
           "0xcf260ea317555637c55f70e55dba8d5ad8414cb0": {
-               "balance": "252460800000000000000000000",
-               "builtin": null
+               "balance": "252460800000000000000000000"
           }
-     }
+     },
+     "nodes": [
+          "enode://6e3d1b39cbd2a9c4f053a27e68fd90d0bac83691dfdc4a13c59f2555078a71e63c5daaee5a82aa6db500512760a5456f86076bf8bbe8011c27c82ed7d6f5fb26@45.77.140.210:30303",
+          "enode://f4698ad485a027497e1cc992bb5f7cecee2b32a44c47202738d8d0eecfab719541988d0cbcbc5ea94c6c959e5cddeb85fc6ae75fb63dc3bf87cdbe9e6f615e9d@206.156.242.64:30303",
+          "enode://31dffed97f8fed1f34fe66453280a89cbeeda60cf28f6fbb212ebbefd7c7566a02c1c7d5c00bbbb49b9fa8a49f157e0f786f379ca9bcbf2fea24de70d70a22b6@206.156.242.61:30303",
+          "enode://6bdc7553ab2e4914cb47774c1e6d8c8f47ac7c3981891f85f65d06f208ea1bc4d3bf982b330950e0a0cd127efd7145c4df7113159a1d4a06ed722e6c16d0ac6c@45.32.215.190:30303",
+          "enode://872d82a24144bc007658fb6fac0dcdfb9b63aeb05ef563a06d0186f2d1e5ffbfc5c4f1244891a8a86ef70682b9d24382e654b305224883698862e2df647a4d23@45.76.236.247:30303",
+          "enode://b11fbc6cde81c80be69508aca8ffea8460680a25a9c151b683293f8617282062b8e8e139bf91e88cedf60068a3cf927b0d48832fda5169b58a8f7ce442de6fb4@206.189.76.132:30303",
+          "enode://96678da10ac83769ab3f63114a41b57b700476c5ac02719b878fa89909a936551bb7609aa09b068bf89903206fa03f23e1b5b9117ca278de304c2570b87dcb27@35.175.15.164:30303"
+     ]
 }

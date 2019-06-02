@@ -8,6 +8,7 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
+	"math/big"
 	"strconv"
 	"strings"
 
@@ -24,6 +25,14 @@ func (u *Uint64) UnmarshalJSON(input []byte) error {
 		}
 		input = []byte(uq)
 	}
+	// if strings.Contains(string(input), "x") {
+	// 	uu, err := hexutil.DecodeUint64(string(input))
+	// 	if err != nil {
+	// 		return err
+	// 	}
+	// 	*u = Uint64(uu)
+	// 	return nil
+	// }
 	ui, err := strconv.ParseUint(string(input), 0, 64)
 	if err != nil {
 		return err
@@ -42,6 +51,20 @@ func (u *Uint64) MarshalJSON() ([]byte, error) {
 // MarshalText implements encoding.TextMarshaler.
 func (u Uint64) MarshalText() ([]byte, error) {
 	return hexutil.Uint64(u).MarshalText()
+}
+
+func (u *Uint64) Big() *big.Int {
+	if u == nil {
+		return nil
+	}
+	return new(big.Int).SetUint64(uint64(*u))
+}
+
+func (u *Uint64) Uint64() uint64 {
+	if u == nil {
+		return 0
+	}
+	return uint64(*u)
 }
 
 type BlockReward map[Uint64]*hexutil.Big
@@ -143,4 +166,56 @@ func (n BlockNonce) MarshalText() ([]byte, error) {
 // UnmarshalText implements encoding.TextUnmarshaler.
 func (n *BlockNonce) UnmarshalText(input []byte) error {
 	return hexutil.UnmarshalFixedText("BlockNonce", input, n[:])
+}
+
+// ParseBig256 parses s as a 256 bit integer in decimal or hexadecimal syntax.
+// Leading zeros are accepted. The empty string parses as zero.
+func ParseBig256(s string) (*big.Int, bool) {
+	if s == "" {
+		return new(big.Int), true
+	}
+	var bigint *big.Int
+	var ok bool
+	if len(s) >= 2 && (s[:2] == "0x" || s[:2] == "0X") {
+		bigint, ok = new(big.Int).SetString(s[2:], 16)
+	} else {
+		bigint, ok = new(big.Int).SetString(s, 10)
+	}
+	if ok && bigint.BitLen() > 256 {
+		bigint, ok = nil, false
+	}
+	return bigint, ok
+}
+
+type ConfigAccountNonce uint64
+
+func (n *ConfigAccountNonce) UnmarshalJSON(input []byte) error {
+	if input[0] == '"' {
+		uq, err := strconv.Unquote(string(input))
+		if err != nil {
+			return err
+		}
+		input = []byte(uq)
+	}
+	if strings.Contains(string(input), "x") {
+		uu, err := hexutil.DecodeUint64(string(input))
+		if err != nil {
+			return err
+		}
+		*n = ConfigAccountNonce(uu)
+		return nil
+	}
+	u, err := strconv.ParseUint(string(input), 10, 64)
+	if err != nil {
+		return err
+	}
+	*n = ConfigAccountNonce(u)
+	return nil
+}
+
+func (n ConfigAccountNonce) MarshalJSON() ([]byte, error) {
+	// if n == nil {
+	// 	return nil, nil
+	// }
+	return []byte(fmt.Sprintf(`"%d"`, uint64(n))), nil
 }

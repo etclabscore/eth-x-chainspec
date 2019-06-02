@@ -30,6 +30,7 @@
           "minGasLimit": "0x1388",
           "networkID": "0x2a",
           "forkBlock": "0x419228",
+          "forkCanonHash": "0x0a66d93c2f727dca618fabaf70c39b37018c73d78b939d8b11efbbd09034778f",
           "eip98Transition": "0x0",
           "eip155Transition": "0xf4240",
           "validateChainIdTransition": "0xf4240",
@@ -52,8 +53,9 @@
           "author": null,
           "timestamp": null,
           "parentHash": null,
-          "extraData": "",
+          "extraData": "0x",
           "gasLimit": "0x5b8d80",
+          "gasUsed": null,
           "stateRoot": null
      },
      "accounts": {
@@ -66,8 +68,7 @@
                               "base": 3000,
                               "word": 0
                          }
-                    },
-                    "activate_at": null
+                    }
                }
           },
           "0x0000000000000000000000000000000000000002": {
@@ -79,8 +80,7 @@
                               "base": 60,
                               "word": 12
                          }
-                    },
-                    "activate_at": null
+                    }
                }
           },
           "0x0000000000000000000000000000000000000003": {
@@ -92,8 +92,7 @@
                               "base": 600,
                               "word": 120
                          }
-                    },
-                    "activate_at": null
+                    }
                }
           },
           "0x0000000000000000000000000000000000000004": {
@@ -105,12 +104,10 @@
                               "base": 15,
                               "word": 3
                          }
-                    },
-                    "activate_at": null
+                    }
                }
           },
           "0x0000000000000000000000000000000000000005": {
-               "balance": "",
                "builtin": {
                     "name": "modexp",
                     "pricing": {
@@ -122,7 +119,6 @@
                }
           },
           "0x0000000000000000000000000000000000000006": {
-               "balance": "",
                "builtin": {
                     "name": "alt_bn128_add",
                     "pricing": {
@@ -135,7 +131,6 @@
                }
           },
           "0x0000000000000000000000000000000000000007": {
-               "balance": "",
                "builtin": {
                     "name": "alt_bn128_mul",
                     "pricing": {
@@ -148,7 +143,6 @@
                }
           },
           "0x0000000000000000000000000000000000000008": {
-               "balance": "",
                "builtin": {
                     "name": "alt_bn128_pairing",
                     "pricing": {
@@ -161,8 +155,14 @@
                }
           },
           "0x00521965e7bd230323c423d96c657db5b79d099f": {
-               "balance": "1606938044258990275541962092341162602522202993782792835301376",
-               "builtin": null
+               "balance": "1606938044258990275541962092341162602522202993782792835301376"
           }
-     }
+     },
+     "nodes": [
+          "enode://56abaf065581a5985b8c5f4f88bd202526482761ba10be9bfdcd14846dd01f652ec33fde0f8c0fd1db19b59a4c04465681fcef50e11380ca88d25996191c52de@40.71.221.215:30303",
+          "enode://d07827483dc47b368eaf88454fb04b41b7452cf454e194e2bd4c14f98a3278fed5d819dbecd0d010407fc7688d941ee1e58d4f9c6354d3da3be92f55c17d7ce3@52.166.117.77:30303",
+          "enode://8fa162563a8e5a05eef3e1cd5abc5828c71344f7277bb788a395cce4a0e30baf2b34b92fe0b2dbbba2313ee40236bae2aab3c9811941b9f5a7e8e90aaa27ecba@52.165.239.18:30303",
+          "enode://7e2e7f00784f516939f94e22bdc6cf96153603ca2b5df1c7cc0f90a38e7a2f218ffb1c05b156835e8b49086d11fdd1b3e2965be16baa55204167aa9bf536a4d9@52.243.47.56:30303",
+          "enode://0518a3d35d4a7b3e8c433e7ffd2355d84a1304ceb5ef349787b556197f0c87fad09daed760635b97d52179d645d3e6d16a37d2cc0a9945c2ddf585684beb39ac@40.68.248.100:30303"
+     ]
 }
