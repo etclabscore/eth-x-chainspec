@@ -5,7 +5,7 @@ import (
 	"math/big"
 	"strings"
 
-	xchain ".."
+	xchain "github.com/etclabscore/eth-x-chainspec"
 
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core"

@@ -10,8 +10,8 @@ import (
 	"reflect"
 	"testing"
 
-	xchain ".."
 	"github.com/davecgh/go-spew/spew"
+	xchain "github.com/etclabscore/eth-x-chainspec"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/go-test/deep"

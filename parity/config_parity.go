@@ -1,7 +1,8 @@
 package parity
 
 import (
-	xchain ".."
+	xchain "github.com/etclabscore/eth-x-chainspec"
+
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereumclassic/go-ethereum/common/hexutil"
 )
