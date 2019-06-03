@@ -184,12 +184,12 @@ func checkUnsupportedValsMust(pars *ConfigParams) error {
 	if pars.EIP161abcTransition.Uint64() != pars.EIP161dTransition.Uint64() {
 		panic("not supported")
 	}
+	// TODO...
 	// unsupportedValuesMust := map[interface{}]interface{}{
 	// 	pars.AccountStartNonce:                       uint64(0),
 	// 	pars.MaximumExtraDataSize:                    uint64(32),
 	// 	pars.MinGasLimit:                             uint64(5000),
 	// 	pars.SubProtocolName:                         "",
-	// 	pars.EIP98Transition:                         nil,
 	// 	pars.ValidateChainIDTransition:               nil,
 	// 	pars.ValidateChainReceiptsTransition:         nil,
 	// 	pars.DustProtectionTransition:                nil,
@@ -203,7 +203,6 @@ func checkUnsupportedValsMust(pars *ConfigParams) error {
 	// 	pars.TransactionPermissionContractTransition: nil,
 	// 	pars.KIP4Transition:                          nil,
 	// 	pars.KIP6Transition:                          nil,
-	// 	// TODO...
 	// }
 	// i := -1
 	// for k, v := range unsupportedValuesMust {

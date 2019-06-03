@@ -25,14 +25,6 @@ func (u *Uint64) UnmarshalJSON(input []byte) error {
 		}
 		input = []byte(uq)
 	}
-	// if strings.Contains(string(input), "x") {
-	// 	uu, err := hexutil.DecodeUint64(string(input))
-	// 	if err != nil {
-	// 		return err
-	// 	}
-	// 	*u = Uint64(uu)
-	// 	return nil
-	// }
 	ui, err := strconv.ParseUint(string(input), 0, 64)
 	if err != nil {
 		return err
@@ -214,8 +206,5 @@ func (n *ConfigAccountNonce) UnmarshalJSON(input []byte) error {
 }
 
 func (n ConfigAccountNonce) MarshalJSON() ([]byte, error) {
-	// if n == nil {
-	// 	return nil, nil
-	// }
 	return []byte(fmt.Sprintf(`"%d"`, uint64(n))), nil
 }
