@@ -18,42 +18,9 @@ import (
 func (c *Config) ToMultiGethGenesis() *core.Genesis {
 	mgc := &params.ChainConfig{}
 	if pars := c.Params; pars != nil {
-		// FIXME
-		if pars.EIP161abcTransition.Uint64() != pars.EIP161dTransition.Uint64() {
-			panic("not supported")
+		if err := checkUnsupportedValsMust(pars); err != nil {
+			panic(err)
 		}
-		// unsupportedValuesMust := map[interface{}]interface{}{
-		// 	pars.AccountStartNonce:                       uint64(0),
-		// 	pars.MaximumExtraDataSize:                    uint64(32),
-		// 	pars.MinGasLimit:                             uint64(5000),
-		// 	pars.SubProtocolName:                         "",
-		// 	pars.EIP98Transition:                         nil,
-		// 	pars.ValidateChainIDTransition:               nil,
-		// 	pars.ValidateChainReceiptsTransition:         nil,
-		// 	pars.DustProtectionTransition:                nil,
-		// 	pars.NonceCapIncrement:                       nil,
-		// 	pars.RemoveDustContracts:                     false,
-		// 	pars.EIP210Transition:                        nil,
-		// 	pars.EIP210ContractAddress:                   nil,
-		// 	pars.EIP210ContractCode:                      nil,
-		// 	pars.ApplyReward:                             false,
-		// 	pars.TransactionPermissionContract:           nil,
-		// 	pars.TransactionPermissionContractTransition: nil,
-		// 	pars.WASMActivationTransition:                nil,
-		// 	pars.KIP4Transition:                          nil,
-		// 	pars.KIP6Transition:                          nil,
-		// 	// TODO...
-		// }
-		// i := -1
-		// for k, v := range unsupportedValuesMust {
-		// 	i++
-		// 	if v == nil && k == nil {
-		// 		continue
-		// 	}
-		// 	if v != nil && !reflect.DeepEqual(k, v) {
-		// 		panic(fmt.Sprintf("%d: %v != %v - unsupported configuration value", i, k, v))
-		// 	}
-		// }
 
 		mgc.ChainID = pars.ChainID.Big()
 		if mgc.ChainID == nil && pars.NetworkID != nil {
@@ -74,7 +41,13 @@ func (c *Config) ToMultiGethGenesis() *core.Genesis {
 
 		mgc.EIP140FBlock = pars.EIP140Transition.Big()
 		mgc.EIP145FBlock = pars.EIP145Transition.Big()
-		mgc.EIP211FBlock = pars.EIP211Transition.Big()
+
+		// FIXME:
+		mgc.EIP211FBlock = pars.EIP211Transition.Big() // FIXME this might actually be for EIP210. :-$
+		// FIXME: opcode EIPs are configured in genesis allocs
+		// 212
+		// 213
+
 		mgc.EIP214FBlock = pars.EIP214Transition.Big()
 		mgc.EIP658FBlock = pars.EIP658Transition.Big()
 		mgc.EIP1014FBlock = pars.EIP1014Transition.Big()
@@ -170,4 +143,44 @@ func (c *Config) ToMultiGethGenesis() *core.Genesis {
 		}
 	}
 	return mgg
+}
+
+func checkUnsupportedValsMust(pars *ConfigParams) error {
+	// FIXME
+	if pars.EIP161abcTransition.Uint64() != pars.EIP161dTransition.Uint64() {
+		panic("not supported")
+	}
+	// unsupportedValuesMust := map[interface{}]interface{}{
+	// 	pars.AccountStartNonce:                       uint64(0),
+	// 	pars.MaximumExtraDataSize:                    uint64(32),
+	// 	pars.MinGasLimit:                             uint64(5000),
+	// 	pars.SubProtocolName:                         "",
+	// 	pars.EIP98Transition:                         nil,
+	// 	pars.ValidateChainIDTransition:               nil,
+	// 	pars.ValidateChainReceiptsTransition:         nil,
+	// 	pars.DustProtectionTransition:                nil,
+	// 	pars.NonceCapIncrement:                       nil,
+	// 	pars.RemoveDustContracts:                     false,
+	// 	pars.EIP210Transition:                        nil,
+	// 	pars.EIP210ContractAddress:                   nil,
+	// 	pars.EIP210ContractCode:                      nil,
+	// 	pars.ApplyReward:                             false,
+	// 	pars.TransactionPermissionContract:           nil,
+	// 	pars.TransactionPermissionContractTransition: nil,
+	// 	pars.WASMActivationTransition:                nil,
+	// 	pars.KIP4Transition:                          nil,
+	// 	pars.KIP6Transition:                          nil,
+	// 	// TODO...
+	// }
+	// i := -1
+	// for k, v := range unsupportedValuesMust {
+	// 	i++
+	// 	if v == nil && k == nil {
+	// 		continue
+	// 	}
+	// 	if v != nil && !reflect.DeepEqual(k, v) {
+	// 		panic(fmt.Sprintf("%d: %v != %v - unsupported configuration value", i, k, v))
+	// 	}
+	// }
+	return nil
 }
