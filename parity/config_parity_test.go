@@ -56,7 +56,7 @@ type chainMarshalCase struct {
 	want      *Config
 }
 
-func mustBlockReward(m map[xchain.Uint64]string) *xchain.BlockReward {
+func mustBlockReward(m map[xchain.Uint64]string) xchain.BlockReward {
 	br := xchain.BlockReward{}
 	for k, v := range m {
 		wantBR, ok := big.NewInt(0).SetString(v, 16)
@@ -65,15 +65,15 @@ func mustBlockReward(m map[xchain.Uint64]string) *xchain.BlockReward {
 		}
 		br[k] = (*hexutil.Big)(wantBR)
 	}
-	return &br
+	return br
 }
 
-func mustBTreeMap(m map[xchain.Uint64]*xchain.Uint64) *xchain.BTreeMap {
+func mustBTreeMap(m map[xchain.Uint64]*xchain.Uint64) xchain.BTreeMap {
 	bt := xchain.BTreeMap{}
 	for k, v := range m {
 		bt[k] = v
 	}
-	return &bt
+	return bt
 }
 
 func xchainUint64(u uint64) *xchain.Uint64 {
@@ -269,7 +269,7 @@ func assertEthashParams(chainFile string, p1, p2 *ConfigEngineEthash) error {
 		return fmt.Errorf("%s - got: %v, want: %v", chainFile, p1.Params.BlockReward, p1.Params.BlockReward)
 	}
 	if !reflect.DeepEqual(p1.Params.DifficultyBombDelays, p1.Params.DifficultyBombDelays) {
-		if len(*p1.Params.DifficultyBombDelays) > 0 || len(*p1.Params.DifficultyBombDelays) > 0 {
+		if len(p1.Params.DifficultyBombDelays) > 0 || len(p1.Params.DifficultyBombDelays) > 0 {
 
 			return fmt.Errorf("%s - got: %v, want: %v", chainFile, p1.Params.DifficultyBombDelays, p1.Params.DifficultyBombDelays)
 		}

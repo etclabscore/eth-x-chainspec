@@ -3,6 +3,7 @@ package parity
 import (
 	"encoding/json"
 	"io/ioutil"
+	"math/big"
 	"path/filepath"
 	"reflect"
 	"strings"
@@ -118,4 +119,88 @@ func TestX1(t *testing.T) {
 		// t.Log(scs.Sdump(mg.Config))
 		// }
 	}
+}
+
+func TestBuiltinActivateAt(t *testing.T) {
+	fname := filepath.Join(testChainsJSONDir, "transition_test.json")
+	b, err := ioutil.ReadFile(fname)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	c := &Config{}
+	err = json.Unmarshal(b, &c)
+	if err != nil {
+		t.Fatal(fname, err)
+	}
+
+	mg := c.ToMultiGethGenesis()
+	if mg == nil {
+		t.Fatal("skipping unsupported config", fname)
+	}
+
+	if c.Genesis == nil {
+		t.Fatal("config read no genesis")
+	}
+	zero := big.NewInt(0)
+	if mg.Config.IsEIP198F(zero) {
+		t.Fatal("no")
+	}
+	if mg.Config.IsEIP212F(zero) {
+		t.Fatal("no")
+	}
+	if mg.Config.IsEIP213F(zero) {
+		t.Fatal("no")
+	}
+
+	five := big.NewInt(5)
+	if !mg.Config.IsEIP198F(five) {
+		t.Fatal("no")
+	}
+	if !mg.Config.IsEIP212F(five) {
+		t.Fatal("no")
+	}
+	if !mg.Config.IsEIP213F(five) {
+		t.Fatal("no")
+	}
+
+	if !mg.Config.IsEIP161F(five) {
+		t.Fatal("no")
+	}
+
+	// "EIP158ToByzantiumAt5": {
+	// 	ChainID:        big.NewInt(1),
+	// 	HomesteadBlock: big.NewInt(0),
+	// 	EIP150Block:    big.NewInt(0),
+	// 	EIP155Block:    big.NewInt(0),
+	// 	EIP158Block:    big.NewInt(0),
+	// 	ByzantiumBlock: big.NewInt(5),
+	// },
+
+	// hardcode := &params.ChainConfig{
+	// 	ChainID:        big.NewInt(1),
+	// 	HomesteadBlock: big.NewInt(0),
+	// 	EIP150Block:    big.NewInt(0),
+	// 	EIP155Block:    big.NewInt(0),
+	// 	EIP158Block:    big.NewInt(0),
+	// 	ByzantiumBlock: big.NewInt(5),
+	// }
+
+	// if diff := deep.Equal(hardcode, mg.Config); len(diff) != 0 {
+	// 	for _, d := range diff {
+	// 		t.Error(d)
+	// 	}
+	// }
+
+	// w := c.EngineOpt.ParityConfigEngineEthash.Params.DifficultyBombDelays[xchain.Uint64(5)]
+	// if *w != xchain.Uint64(3000000) {
+	// 	t.Fatal("no", spew.Sdump(c.EngineOpt.ParityConfigEngineEthash))
+	// }
+
+	// t.Log()
+
+	// if mg.Config.DifficultyBombDelays[big.NewInt(5)] == nil || mg.Config.DifficultyBombDelays[big.NewInt(5)].Cmp(big.NewInt(3000000)) != 0 {
+	// 	spew.Config.DisableMethods = true
+	// 	t.Fatal("no", spew.Sdump(mg.Config))
+	// }
 }

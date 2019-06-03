@@ -13,6 +13,16 @@ import (
 	"github.com/ethereum/go-ethereum/params"
 )
 
+func (c *Config) BuiltinContracts() (builtins []ConfigAccountValueBuiltin) {
+	for _, v := range c.Accounts {
+		if v.Builtin != nil {
+			b := v.Builtin
+			builtins = append(builtins, *b)
+		}
+	}
+	return
+}
+
 // ToMultiGethGenesis converts a Parity chainspec to the corresponding MultiGeth datastructure.
 // Note that the return value 'core.Genesis' includes the respective 'params.ChainConfig' values.
 func (c *Config) ToMultiGethGenesis() *core.Genesis {
@@ -23,48 +33,63 @@ func (c *Config) ToMultiGethGenesis() *core.Genesis {
 		}
 
 		mgc.ChainID = pars.ChainID.Big()
+
+		// Defaults according to Parity documentation https://wiki.parity.io/Chain-specification.html
 		if mgc.ChainID == nil && pars.NetworkID != nil {
-			mgc.ChainID = pars.NetworkID.Big() // Default according to Parity documentation https://wiki.parity.io/Chain-specification.html
+			mgc.ChainID = pars.NetworkID.Big()
 		}
 
-		mgc.EIP150Block = pars.EIP150Transition.Big()
-		// mgc.EIP150Hash // TODO? CHT?
+		// DAO
+		setDAOConfigs(mgc, pars)
 
+		// Tangerine
+		mgc.EIP150Block = pars.EIP150Transition.Big()
+		// mgc.EIP150Hash // optional@mg
+
+		// Spurious
 		mgc.EIP155Block = pars.EIP155Transition.Big()
 		mgc.EIP160FBlock = pars.EIP160Transition.Big()
+		mgc.EIP161FBlock = pars.EIP161abcTransition.Big() // and/or d
 		mgc.EIP170FBlock = pars.MaxCodeSizeTransition.Big()
 		if mgc.EIP170FBlock != nil && uint64(*pars.MaxCodeSize) != uint64(24576) {
 			panic(fmt.Sprintf("%v != %v - unsupported configuration value", *pars.MaxCodeSize, 24576))
 		}
 
-		mgc.EIP161FBlock = pars.EIP161abcTransition.Big()
-
+		// Byzantium
+		// 100
 		mgc.EIP140FBlock = pars.EIP140Transition.Big()
-		mgc.EIP145FBlock = pars.EIP145Transition.Big()
-
-		// FIXME:
+		// 198
 		mgc.EIP211FBlock = pars.EIP211Transition.Big() // FIXME this might actually be for EIP210. :-$
-		// FIXME: opcode EIPs are configured in genesis allocs
 		// 212
 		// 213
-
 		mgc.EIP214FBlock = pars.EIP214Transition.Big()
+		// 649 - metro diff bomb, block reward
 		mgc.EIP658FBlock = pars.EIP658Transition.Big()
+
+		parityBuiltins := c.BuiltinContracts()
+		for _, pc := range parityBuiltins {
+			if pc.ActivateAt != nil {
+				switch *pc.Name {
+				case "modexp":
+					mgc.EIP198FBlock = new(big.Int).Set(pc.ActivateAt.Big())
+				case "alt_bn128_pairing":
+					mgc.EIP212FBlock = new(big.Int).Set(pc.ActivateAt.Big())
+				case "alt_bn128_add", "alt_bn128_mul":
+					mgc.EIP213FBlock = new(big.Int).Set(pc.ActivateAt.Big())
+				default:
+					// panic("unsupported builtin contract: " + *pc.Name)
+				}
+			}
+		}
+
+		// Constantinople
+		mgc.EIP145FBlock = pars.EIP145Transition.Big()
 		mgc.EIP1014FBlock = pars.EIP1014Transition.Big()
 		mgc.EIP1052FBlock = pars.EIP1052Transition.Big()
 		mgc.EIP1283FBlock = pars.EIP1283Transition.Big()
 		mgc.PetersburgBlock = pars.EIP1283DisableTransition.Big()
 
-		if pars.ForkBlock != nil && pars.ForkCanonHash != nil {
-			if (uint64(*pars.ForkBlock) == params.MainnetChainConfig.DAOForkBlock.Uint64() && *pars.ForkCanonHash == common.HexToHash("0x4985f5ca3d2afbec36529aa96f74de3cc10a2a4a6c44f2157a57d2c6059a11bb")) || (uint64(*pars.ForkBlock) == params.TestnetChainConfig.DAOForkBlock.Uint64() && *pars.ForkCanonHash == common.HexToHash("0x3e12d5c0f8d63fbc5831cc7f7273bd824fa4d0a9a4102d65d99a7ea5604abc00")) {
-
-				mgc.DAOForkBlock = new(big.Int).SetUint64(pars.ForkBlock.Uint64())
-				mgc.DAOForkSupport = true
-			}
-			if uint64(*pars.ForkBlock) == uint64(1920000) && *pars.ForkCanonHash == common.HexToHash("0x94365e3a8c0b35089c1d1195081fe7489b528a84b22199c916180db8b28ade7f") {
-				mgc.DAOForkBlock = new(big.Int).SetUint64(pars.ForkBlock.Uint64())
-			}
-		}
+		mgc.EWASMBlock = pars.WASMActivationTransition.Big()
 	}
 
 	if ethc := c.EngineOpt.ParityConfigEngineEthash; ethc != nil {
@@ -86,6 +111,15 @@ func (c *Config) ToMultiGethGenesis() *core.Genesis {
 			return big.NewInt(0)
 		}()
 		mgc.ECIP1017EraRounds = pars.Ecip1017EraRounds.Big()
+
+		mgc.DifficultyBombDelays = params.DifficultyBombDelaysT{}
+		for k, v := range pars.DifficultyBombDelays {
+			mgc.DifficultyBombDelays[new(big.Int).SetUint64(k.Uint64())] = new(big.Int).SetUint64(v.Uint64())
+		}
+		mgc.BlockRewardSchedule = params.BlockRewardScheduleT{}
+		for k, v := range pars.BlockReward {
+			mgc.BlockRewardSchedule[new(big.Int).SetUint64(k.Uint64())] = new(big.Int).Set(v.ToInt())
+		}
 
 	} else if ethc := c.EngineOpt.ParityConfigEngineClique; ethc != nil {
 
@@ -167,7 +201,6 @@ func checkUnsupportedValsMust(pars *ConfigParams) error {
 	// 	pars.ApplyReward:                             false,
 	// 	pars.TransactionPermissionContract:           nil,
 	// 	pars.TransactionPermissionContractTransition: nil,
-	// 	pars.WASMActivationTransition:                nil,
 	// 	pars.KIP4Transition:                          nil,
 	// 	pars.KIP6Transition:                          nil,
 	// 	// TODO...
@@ -183,4 +216,18 @@ func checkUnsupportedValsMust(pars *ConfigParams) error {
 	// 	}
 	// }
 	return nil
+}
+
+func setDAOConfigs(mgc *params.ChainConfig, pars *ConfigParams) {
+	if pars.ForkCanonHash != nil {
+		if (*pars.ForkCanonHash == common.HexToHash("0x4985f5ca3d2afbec36529aa96f74de3cc10a2a4a6c44f2157a57d2c6059a11bb")) ||
+			(*pars.ForkCanonHash == common.HexToHash("0x3e12d5c0f8d63fbc5831cc7f7273bd824fa4d0a9a4102d65d99a7ea5604abc00")) {
+
+			mgc.DAOForkBlock = new(big.Int).SetUint64(pars.ForkBlock.Uint64())
+			mgc.DAOForkSupport = true
+		}
+		if *pars.ForkCanonHash == common.HexToHash("0x94365e3a8c0b35089c1d1195081fe7489b528a84b22199c916180db8b28ade7f") {
+			mgc.DAOForkBlock = new(big.Int).SetUint64(pars.ForkBlock.Uint64())
+		}
+	}
 }

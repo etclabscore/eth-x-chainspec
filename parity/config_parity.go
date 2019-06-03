@@ -74,11 +74,11 @@ type ConfigEngineEthashParams struct {
 	MetropolisDifficultyIncrementDivisor *xchain.Uint64 `json:"metropolisDifficultyIncrementDivisor,omitempty"`
 	DurationLimit                        *xchain.Uint64 `json:"durationLimit,omitempty"`
 
-	HomesteadTransition           *xchain.Uint64      `json:"homesteadTransition,omitempty"`
-	BlockReward                   *xchain.BlockReward `json:"blockReward,omitempty"`
-	BlockRewardContractTransition *xchain.Uint64      `json:"blockRewardContractTransition,omitempty"`
-	BlockRewardContractAddress    *common.Address     `json:"blockRewardContractAddress,omitempty"`
-	BlockRewardContractCode       []byte              `json:"blockRewardContractCode,omitempty"`
+	HomesteadTransition           *xchain.Uint64     `json:"homesteadTransition,omitempty"`
+	BlockReward                   xchain.BlockReward `json:"blockReward,omitempty"`
+	BlockRewardContractTransition *xchain.Uint64     `json:"blockRewardContractTransition,omitempty"`
+	BlockRewardContractAddress    *common.Address    `json:"blockRewardContractAddress,omitempty"`
+	BlockRewardContractCode       []byte             `json:"blockRewardContractCode,omitempty"`
 
 	DaoHardforkTransition  *xchain.Uint64   `json:"daoHardforkTransition,omitempty"`
 	DaoHardforkBeneficiary *common.Address  `json:"daoHardforkBeneficiary,omitempty"`
@@ -95,7 +95,7 @@ type ConfigEngineEthashParams struct {
 
 	Ecip1017EraRounds *xchain.Uint64 `json:"ecip1017EraRounds,omitempty"`
 
-	DifficultyBombDelays *xchain.BTreeMap `json:"difficultyBombDelays,omitempty"`
+	DifficultyBombDelays xchain.BTreeMap `json:"difficultyBombDelays,omitempty"`
 
 	EXPIP2Transition    *xchain.Uint64 `json:"expip2Transition,omitempty"`
 	EXPIP2DurationLimit *xchain.Uint64 `json:"expip2DurationLimit,omitempty"`
