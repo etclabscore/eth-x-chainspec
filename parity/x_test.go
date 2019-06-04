@@ -2,8 +2,10 @@ package parity
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"math/big"
+	"os"
 	"path/filepath"
 	"reflect"
 	"strings"
@@ -121,6 +123,41 @@ func TestX1(t *testing.T) {
 	}
 }
 
+func TestTransitionConfig(t *testing.T) {
+	fname := filepath.Join(testChainsJSONDir, "transition_test.json")
+	b, err := ioutil.ReadFile(fname)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	c := &Config{}
+	err = json.Unmarshal(b, &c)
+	if err != nil {
+		t.Fatal(fname, err)
+	}
+
+	mg := c.ToMultiGethGenesis()
+	if mg == nil {
+		t.Fatal("skipping unsupported config", fname)
+	}
+
+	if c.Genesis == nil {
+		t.Fatal("config read no genesis")
+	}
+
+	// mgGenesis := mg.ToBlock(nil)
+
+	// hardcode := &params.ChainConfig{
+	// 	ChainID:        big.NewInt(1),
+	// 	HomesteadBlock: big.NewInt(0),
+	// 	EIP150Block:    big.NewInt(0),
+	// 	EIP155Block:    big.NewInt(0),
+	// 	EIP158Block:    big.NewInt(0),
+	// 	ByzantiumBlock: big.NewInt(5),
+	// }
+
+}
+
 func TestBuiltinActivateAt(t *testing.T) {
 	fname := filepath.Join(testChainsJSONDir, "transition_test.json")
 	b, err := ioutil.ReadFile(fname)
@@ -203,4 +240,36 @@ func TestBuiltinActivateAt(t *testing.T) {
 	// 	spew.Config.DisableMethods = true
 	// 	t.Fatal("no", spew.Sdump(mg.Config))
 	// }
+}
+
+func TestMultiGethToParityConfig(t *testing.T) {
+
+	cases := []struct {
+		name string
+		gen  *core.Genesis
+	}{
+		{
+			"classic",
+			core.DefaultClassicGenesisBlock(),
+		},
+	}
+	for _, c := range cases {
+		pc := &Config{}
+		if err := pc.FromMultiGethGenesis("classic-test", c.gen); err != nil {
+			t.Fatal(err)
+		}
+
+		fname := filepath.Join(testChainsJSONDir+"_out", fmt.Sprintf("multigeth_%s.json", c.name))
+
+		b, err := json.MarshalIndent(pc, "", "    ")
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		err = ioutil.WriteFile(fname, b, os.ModePerm)
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+
 }
