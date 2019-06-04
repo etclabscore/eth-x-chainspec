@@ -11,6 +11,8 @@ cd parity-ethereum
 rsync -avhu ../parity/chainspecs_out/*json ./ethcore/res/ethereum/
 ./scripts/gitlab/validate-chainspecs.sh
 
+
 # one could cache or ignore such things to avoid compilation time, but not me
+cd ..
 rm -rf ./parity-ethereum
 
