@@ -247,6 +247,7 @@ func (c *Config) ToMultiGethGenesis() *core.Genesis {
 					mgc.EIP212FBlock = new(big.Int).Set(pc.ActivateAt.Big())
 				case "alt_bn128_add", "alt_bn128_mul":
 					mgc.EIP213FBlock = new(big.Int).Set(pc.ActivateAt.Big())
+				case "ripemd160", "ecrecover", "sha256", "identity":
 				default:
 					panic("unsupported builtin contract: " + *pc.Name)
 				}
