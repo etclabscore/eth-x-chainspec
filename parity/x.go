@@ -15,6 +15,20 @@ import (
 	"github.com/ethereum/go-ethereum/params"
 )
 
+func bigMax(a, b *big.Int) *big.Int {
+	if a == nil {
+		return b
+	}
+	if b == nil {
+		return a
+	}
+
+	if a.Cmp(b) > 0 {
+		return a
+	}
+	return b
+}
+
 // Yea, returning an error here and not from To_. Sue me.
 func (c *Config) FromMultiGethGenesis(name string, mgg *core.Genesis) error {
 	if c == nil {
@@ -62,6 +76,9 @@ func (c *Config) FromMultiGethGenesis(name string, mgg *core.Genesis) error {
 		}
 	}
 
+	zero := xchain.Uint64(0)
+	c.Params.AccountStartNonce = &zero
+
 	c.Params.ChainID = xchain.FromUint64(mgg.Config.ChainID.Uint64())
 	setParityDAOConfigFromMultiGeth(c.Params, mgg.Config)
 	if mgg.Config.EIP150Block != nil {
@@ -70,40 +87,51 @@ func (c *Config) FromMultiGethGenesis(name string, mgg *core.Genesis) error {
 	if mgg.Config.EIP155Block != nil {
 		c.Params.EIP155Transition = xchain.FromUint64(mgg.Config.EIP155Block.Uint64())
 	}
-	if mgg.Config.EIP160FBlock != nil {
-		c.Params.EIP160Transition = xchain.FromUint64(mgg.Config.EIP160FBlock.Uint64())
+	if mgg.Config.EIP160FBlock != nil || mgg.Config.EIP158Block != nil {
+		b := new(big.Int).Set(bigMax(mgg.Config.EIP158Block, mgg.Config.EIP160FBlock))
+		c.Params.EIP160Transition = xchain.FromUint64(b.Uint64())
 	}
-	if mgg.Config.EIP161FBlock != nil {
-		c.Params.EIP161abcTransition = xchain.FromUint64(mgg.Config.EIP161FBlock.Uint64())
-		c.Params.EIP161dTransition = xchain.FromUint64(mgg.Config.EIP161FBlock.Uint64())
+	if mgg.Config.EIP161FBlock != nil || mgg.Config.EIP158Block != nil {
+		b := new(big.Int).Set(bigMax(mgg.Config.EIP158Block, mgg.Config.EIP161FBlock))
+		c.Params.EIP161abcTransition = xchain.FromUint64(b.Uint64())
+		c.Params.EIP161dTransition = xchain.FromUint64(b.Uint64())
 	}
-	if mgg.Config.EIP170FBlock != nil {
+	if mgg.Config.EIP170FBlock != nil || mgg.Config.EIP158Block != nil {
 		c.Params.MaxCodeSize = xchain.FromUint64(uint64(params.MaxCodeSize))
-		c.Params.MaxCodeSizeTransition = xchain.FromUint64(mgg.Config.EIP170FBlock.Uint64())
+		b := new(big.Int).Set(bigMax(mgg.Config.EIP158Block, mgg.Config.EIP170FBlock))
+		c.Params.MaxCodeSizeTransition = xchain.FromUint64(b.Uint64())
 	}
-	if mgg.Config.EIP140FBlock != nil {
-		c.Params.EIP140Transition = xchain.FromUint64(mgg.Config.EIP140FBlock.Uint64())
+	if mgg.Config.EIP140FBlock != nil || mgg.Config.ByzantiumBlock != nil {
+		b := new(big.Int).Set(bigMax(mgg.Config.ByzantiumBlock, mgg.Config.EIP140FBlock))
+		c.Params.EIP140Transition = xchain.FromUint64(b.Uint64())
 	}
-	if mgg.Config.EIP211FBlock != nil {
-		c.Params.EIP211Transition = xchain.FromUint64(mgg.Config.EIP211FBlock.Uint64())
+	if mgg.Config.EIP211FBlock != nil || mgg.Config.ByzantiumBlock != nil {
+		b := new(big.Int).Set(bigMax(mgg.Config.ByzantiumBlock, mgg.Config.EIP211FBlock))
+		c.Params.EIP211Transition = xchain.FromUint64(b.Uint64())
 	}
-	if mgg.Config.EIP214FBlock != nil {
-		c.Params.EIP214Transition = xchain.FromUint64(mgg.Config.EIP214FBlock.Uint64())
+	if mgg.Config.EIP214FBlock != nil || mgg.Config.ByzantiumBlock != nil {
+		b := new(big.Int).Set(bigMax(mgg.Config.ByzantiumBlock, mgg.Config.EIP214FBlock))
+		c.Params.EIP214Transition = xchain.FromUint64(b.Uint64())
 	}
-	if mgg.Config.EIP658FBlock != nil {
-		c.Params.EIP658Transition = xchain.FromUint64(mgg.Config.EIP658FBlock.Uint64())
+	if mgg.Config.EIP658FBlock != nil || mgg.Config.ByzantiumBlock != nil {
+		b := new(big.Int).Set(bigMax(mgg.Config.ByzantiumBlock, mgg.Config.EIP658FBlock))
+		c.Params.EIP658Transition = xchain.FromUint64(b.Uint64())
 	}
-	if mgg.Config.EIP145FBlock != nil {
-		c.Params.EIP145Transition = xchain.FromUint64(mgg.Config.EIP145FBlock.Uint64())
+	if mgg.Config.EIP145FBlock != nil || mgg.Config.ConstantinopleBlock != nil {
+		b := new(big.Int).Set(bigMax(mgg.Config.ConstantinopleBlock, mgg.Config.EIP145FBlock))
+		c.Params.EIP145Transition = xchain.FromUint64(b.Uint64())
 	}
-	if mgg.Config.EIP1014FBlock != nil {
-		c.Params.EIP1014Transition = xchain.FromUint64(mgg.Config.EIP1014FBlock.Uint64())
+	if mgg.Config.EIP1014FBlock != nil || mgg.Config.ConstantinopleBlock != nil {
+		b := new(big.Int).Set(bigMax(mgg.Config.ConstantinopleBlock, mgg.Config.EIP1014FBlock))
+		c.Params.EIP1014Transition = xchain.FromUint64(b.Uint64())
 	}
-	if mgg.Config.EIP1052FBlock != nil {
-		c.Params.EIP1052Transition = xchain.FromUint64(mgg.Config.EIP1052FBlock.Uint64())
+	if mgg.Config.EIP1052FBlock != nil || mgg.Config.ConstantinopleBlock != nil {
+		b := new(big.Int).Set(bigMax(mgg.Config.ConstantinopleBlock, mgg.Config.EIP1052FBlock))
+		c.Params.EIP1052Transition = xchain.FromUint64(b.Uint64())
 	}
-	if mgg.Config.EIP1283FBlock != nil {
-		c.Params.EIP1283Transition = xchain.FromUint64(mgg.Config.EIP1283FBlock.Uint64())
+	if mgg.Config.EIP1283FBlock != nil || mgg.Config.ConstantinopleBlock != nil {
+		b := new(big.Int).Set(bigMax(mgg.Config.ConstantinopleBlock, mgg.Config.EIP1283FBlock))
+		c.Params.EIP1283Transition = xchain.FromUint64(b.Uint64())
 	}
 	if mgg.Config.PetersburgBlock != nil {
 		c.Params.EIP1283DisableTransition = xchain.FromUint64(mgg.Config.PetersburgBlock.Uint64())
@@ -119,8 +147,9 @@ func (c *Config) FromMultiGethGenesis(name string, mgg *core.Genesis) error {
 		if mgg.Config.HomesteadBlock != nil {
 			c.EngineOpt.ParityConfigEngineEthash.Params.HomesteadTransition = xchain.FromUint64(mgg.Config.HomesteadBlock.Uint64())
 		}
-		if mgg.Config.EIP100FBlock != nil {
-			c.EngineOpt.ParityConfigEngineEthash.Params.EIP100BTransition = xchain.FromUint64(mgg.Config.EIP100FBlock.Uint64())
+		if mgg.Config.EIP100FBlock != nil || mgg.Config.ByzantiumBlock != nil {
+			b := new(big.Int).Set(bigMax(mgg.Config.EIP100FBlock, mgg.Config.ByzantiumBlock))
+			c.EngineOpt.ParityConfigEngineEthash.Params.EIP100BTransition = xchain.FromUint64(b.Uint64())
 		}
 		if mgg.Config.DisposalBlock != nil {
 			c.EngineOpt.ParityConfigEngineEthash.Params.BombDefuseTransition = xchain.FromUint64(mgg.Config.DisposalBlock.Uint64())
@@ -219,7 +248,7 @@ func (c *Config) ToMultiGethGenesis() *core.Genesis {
 				case "alt_bn128_add", "alt_bn128_mul":
 					mgc.EIP213FBlock = new(big.Int).Set(pc.ActivateAt.Big())
 				default:
-					// panic("unsupported builtin contract: " + *pc.Name)
+					panic("unsupported builtin contract: " + *pc.Name)
 				}
 			}
 		}
@@ -434,12 +463,13 @@ func (c *Config) WithPrecompiledContractsFromMultiGeth(mgg *core.Genesis) {
 		},
 	}
 
-	if mgg.Config.EIP198FBlock != nil {
+	if mgg.Config.EIP198FBlock != nil || mgg.Config.ByzantiumBlock != nil {
+		b := new(big.Int).Set(bigMax(mgg.Config.EIP198FBlock, mgg.Config.ByzantiumBlock))
 		modexp := "modexp"
 		c.Accounts[common.BytesToAddress([]byte{5}).Hex()] = ConfigAccountValue{
 			Builtin: &ConfigAccountValueBuiltin{
 				Name:       &modexp,
-				ActivateAt: xchain.FromUint64(mgg.Config.EIP198FBlock.Uint64()),
+				ActivateAt: xchain.FromUint64(b.Uint64()),
 				PricingOpt: ConfigAccountValueBuiltinPricing{
 					ConfigAccountValueBuiltinPricingModexp: &ConfigAccountValueBuiltinPricingModexp{
 						Divisor: 20,
@@ -450,11 +480,13 @@ func (c *Config) WithPrecompiledContractsFromMultiGeth(mgg *core.Genesis) {
 
 	}
 
-	if mgg.Config.EIP212FBlock != nil {
+	if mgg.Config.EIP212FBlock != nil || mgg.Config.ByzantiumBlock != nil {
+		b := new(big.Int).Set(bigMax(mgg.Config.EIP212FBlock, mgg.Config.ByzantiumBlock))
 		alt_bn128_pairing := "alt_bn128_pairing"
 		c.Accounts[common.BytesToAddress([]byte{8}).Hex()] = ConfigAccountValue{
 			Builtin: &ConfigAccountValueBuiltin{
-				Name: &alt_bn128_pairing,
+				Name:       &alt_bn128_pairing,
+				ActivateAt: xchain.FromUint64(b.Uint64()),
 				PricingOpt: ConfigAccountValueBuiltinPricing{
 					ConfigAccountValueBuiltinPricingAltBN128Pairing: &ConfigAccountValueBuiltinPricingAltBN128Pairing{
 						Base: 100000,
@@ -466,11 +498,13 @@ func (c *Config) WithPrecompiledContractsFromMultiGeth(mgg *core.Genesis) {
 
 	}
 
-	if mgg.Config.EIP213FBlock != nil {
+	if mgg.Config.EIP213FBlock != nil || mgg.Config.ByzantiumBlock != nil {
+		b := new(big.Int).Set(bigMax(mgg.Config.EIP213FBlock, mgg.Config.ByzantiumBlock))
 		alt_bn128_add := "alt_bn128_add"
 		c.Accounts[common.BytesToAddress([]byte{6}).Hex()] = ConfigAccountValue{
 			Builtin: &ConfigAccountValueBuiltin{
-				Name: &alt_bn128_add,
+				Name:       &alt_bn128_add,
+				ActivateAt: xchain.FromUint64(b.Uint64()),
 				PricingOpt: ConfigAccountValueBuiltinPricing{
 					ConfigAccountValueBuiltinPricingLinear: &ConfigAccountValueBuiltinPricingLinear{
 						Base: 500,
@@ -483,7 +517,8 @@ func (c *Config) WithPrecompiledContractsFromMultiGeth(mgg *core.Genesis) {
 		alt_bn128_mul := "alt_bn128_mul"
 		c.Accounts[common.BytesToAddress([]byte{7}).Hex()] = ConfigAccountValue{
 			Builtin: &ConfigAccountValueBuiltin{
-				Name: &alt_bn128_mul,
+				Name:       &alt_bn128_mul,
+				ActivateAt: xchain.FromUint64(b.Uint64()),
 				PricingOpt: ConfigAccountValueBuiltinPricing{
 					ConfigAccountValueBuiltinPricingLinear: &ConfigAccountValueBuiltinPricingLinear{
 						Base: 40000,
